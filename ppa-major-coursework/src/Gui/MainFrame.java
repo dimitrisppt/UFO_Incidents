@@ -23,6 +23,7 @@ import javax.swing.ListCellRenderer;
 
 import javax.swing.SwingConstants;
 
+import Listeners.ItemChangeListener;
 import Listeners.MainActionListener;
 import Listeners.MainComboBoxListener;
 import api.ripley.Ripley;
@@ -89,7 +90,7 @@ public class MainFrame extends JFrame {
 		
 		setBottomPanel();
 		
-		setResizable(false);
+		
 		pack();
 		setVisible(true);
 		
@@ -192,6 +193,9 @@ public class MainFrame extends JFrame {
 		jpDates.add(labelTo);
 		jpDates.add(dateToComboBox);
 
+		dateFromComboBox.addItemListener(new ItemChangeListener());
+		dateToComboBox.addItemListener(new ItemChangeListener());
+		
 		jpTop.add(jpDates, BorderLayout.EAST);
 		
 		
