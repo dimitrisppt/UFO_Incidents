@@ -26,7 +26,11 @@ import javax.swing.SwingConstants;
 import Listeners.ItemChangeListener;
 import Listeners.MainActionListener;
 import Listeners.MainComboBoxListener;
+import api.ripley.Incident;
 import api.ripley.Ripley;
+import map.InfoModel;
+import map.MapInformationWindow;
+
 
 public class MainFrame extends JFrame {
 	
@@ -54,7 +58,7 @@ public class MainFrame extends JFrame {
 	private JLabel leftLabel;
 	private JPanel leftCard;
 
-	
+	private Incident incident;
 	public static void main(String[] args) {
 
 		MainFrame mainFrame = new MainFrame();
@@ -70,7 +74,10 @@ public class MainFrame extends JFrame {
 		
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		years = new ArrayList<Integer>();
-
+		
+		MapInformationWindow window = new MapInformationWindow(new InfoModel());
+		
+		
 		initWidgets();
 	}
 
