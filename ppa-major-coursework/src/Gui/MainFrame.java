@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
@@ -32,7 +34,7 @@ import map.InfoModel;
 import map.MapInformationWindow;
 
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Observer {
 	
 	private Ripley ripley;
 	
@@ -57,6 +59,10 @@ public class MainFrame extends JFrame {
 	private JPanel rightCard;
 	private JLabel leftLabel;
 	private JPanel leftCard;
+	private WelcomePanel welcomePanel;
+	private WelcomeListenerFrom welcomeListenerFrom;
+	private WelcomeListenerTo welcomeListenerTo;
+	private WelcomeModel welcomeModel;
 
 	private Incident incident;
 	public static void main(String[] args) {
@@ -74,8 +80,9 @@ public class MainFrame extends JFrame {
 		
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		years = new ArrayList<Integer>();
-		
-		MapInformationWindow window = new MapInformationWindow(new InfoModel());
+		welcomeModel = new WelcomeModel();
+		welcomePanel = new WelcomePanel(welcomeModel);
+		//MapInformationWindow window = new MapInformationWindow(new InfoModel());
 		
 		
 		initWidgets();
@@ -86,13 +93,12 @@ public class MainFrame extends JFrame {
 	public void initWidgets() {
 
 		background = setBackground();
-		
 		setLayout(new BorderLayout());
 		
 		setTopPanel();
 		setCenterPanel();
 		
-		panels=setPanels(background);
+		panels = setPanels(background);
 		panels.setOpaque(false);
 		
 		setBottomPanel();
@@ -107,12 +113,12 @@ public class MainFrame extends JFrame {
 	
 	public JPanel setPanels(JLabel label) {
 		
-		centerCard = new JPanel();
+		centerCard = welcomePanel;
 		centerCard.setOpaque(false);
-		centerLabel = new JLabel("CENTER");
-		centerLabel.setForeground(Color.white);
-		centerLabel.setOpaque(false);
-		centerCard.add(centerLabel);
+		//centerLabel = new JLabel("CENTER");
+		//centerLabel.setForeground(Color.white);
+		//centerLabel.setOpaque(false);
+		//centerCard.add(centerLabel);
 
         rightCard = new JPanel();
         rightCard.setOpaque(false);
@@ -200,8 +206,13 @@ public class MainFrame extends JFrame {
 		jpDates.add(labelTo);
 		jpDates.add(dateToComboBox);
 
-		dateFromComboBox.addItemListener(new ItemChangeListener());
-		dateToComboBox.addItemListener(new ItemChangeListener());
+		//dateFromComboBox.addItemListener(new ItemChangeListener());
+		//dateToComboBox.addItemListener(new ItemChangeListener());
+		
+		welcomeListenerFrom = new WelcomeListenerFrom(dateFromComboBox , welcomeModel);
+		dateFromComboBox.addActionListener(welcomeListenerFrom);
+		welcomeListenerTo = new WelcomeListenerTo(dateToComboBox , welcomeModel);
+		dateToComboBox.addActionListener(welcomeListenerTo);
 		
 		jpTop.add(jpDates, BorderLayout.EAST);
 		
@@ -249,6 +260,14 @@ public class MainFrame extends JFrame {
 		
 		background.add(jpBottom, BorderLayout.SOUTH);
 
+	}
+
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
