@@ -1,6 +1,7 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 
 import javax.swing.DefaultListModel;
@@ -27,6 +28,8 @@ public class InfoModel extends Observable {
 	private String endYear;
 	
 	private Icon ufoIcon;
+	
+	private String sortProperty = "-";
 
 	public InfoModel() {
 		
@@ -38,7 +41,7 @@ public class InfoModel extends Observable {
 	
 		incidentsList = ripley.getIncidentsInRange(startYear, endYear);
 		
-		  ufoIcon = new ImageIcon("src/Gui/ufo.png");
+		ufoIcon = new ImageIcon("src/Gui/ufo.png");
 		 
 		  
 	}
@@ -61,12 +64,20 @@ public class InfoModel extends Observable {
 	
 	public void addIncidentsToList(DefaultListModel<String> listModel) {
 		
+		Collections.sort(incidentsList, new OrderIncidentsList(sortProperty));
+		
 		for (int i=0; i<incidentsList.size(); i++) {
+			
 			
 			Incident incident = incidentsList.get(i);
 			
 			listModel.add(i, "Time: " + incident.getDateAndTime() + " City: " + incident.getCity() + " Shape: " + incident.getShape() + " Duration: " + incident.getDuration() + " Posted: " + incident.getPosted());
+		
 		}
+		
+
+	
+		
 	}
 	
 	public void showSpecificInfo(int index) {
@@ -80,6 +91,23 @@ public class InfoModel extends Observable {
 		
 		
 	}
+	
+	public void setSortProperty(String sortProperty) {
+		this.sortProperty = sortProperty;
+	}
+	
+	public void sortAgain(DefaultListModel<String> listModel){
+		
+		listModel.removeAllElements();
+		
+		addIncidentsToList(listModel);
+		
+		
+		
+	}
+	
+	
+	
 	
 	
 	

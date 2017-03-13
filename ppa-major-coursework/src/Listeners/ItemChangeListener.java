@@ -10,7 +10,7 @@ public class ItemChangeListener implements ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			Object item = e.getItem();
-			
+			System.out.println(item.toString());
 		}
 		
 	}

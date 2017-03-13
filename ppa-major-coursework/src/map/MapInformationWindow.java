@@ -24,6 +24,9 @@ public class MapInformationWindow extends JFrame implements Observer{
 	private InfoModel infoModel;
 	private JList jlInfo;
 	private DefaultListModel listModel;
+	private JComboBox<String> jcbSortSightings;
+	private SortIncidentsListener sortListener;
+	private static String sortProperty;
 
 	public MapInformationWindow(InfoModel infoModel) {
 		
@@ -37,10 +40,24 @@ public class MapInformationWindow extends JFrame implements Observer{
 		JPanel jpTop = new JPanel();
 		JPanel jpCenter = new JPanel();
 		
-		JComboBox<String> jcbSortSightings = new JComboBox<String>();
+		listModel = new DefaultListModel();
+		
+		jcbSortSightings = new JComboBox<String>();
+		
+		jcbSortSightings.addItem("-");
+		jcbSortSightings.addItem("Date");
+		jcbSortSightings.addItem("City");
+		jcbSortSightings.addItem("Shape");
+		jcbSortSightings.addItem("Duration");
+		jcbSortSightings.addItem("Posted");
+		sortListener = new SortIncidentsListener(infoModel, listModel);
+		jcbSortSightings.addItemListener(sortListener);
+		
+		
+		
 	
 		
-		listModel = new DefaultListModel();
+		
 		
 		jlInfo = new JList(listModel);
 		infoModel.addIncidentsToList(listModel);
@@ -69,9 +86,10 @@ public class MapInformationWindow extends JFrame implements Observer{
 	
 	}
 	
-	public static void main(String[] args) {
-		MapInformationWindow window = new MapInformationWindow(new InfoModel());
-	}
+	
+//	public static void main(String[] args) {
+//		MapInformationWindow window = new MapInformationWindow(new InfoModel(sortProperty));
+//	}
 
 	@Override
 	public void update(Observable o, Object arg) {
