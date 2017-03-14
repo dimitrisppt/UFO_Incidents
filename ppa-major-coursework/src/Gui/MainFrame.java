@@ -60,8 +60,6 @@ public class MainFrame extends JFrame implements Observer {
 	private JLabel leftLabel;
 	private JPanel leftCard;
 	private WelcomePanel welcomePanel;
-	private WelcomeListenerFrom welcomeListenerFrom;
-	private WelcomeListenerTo welcomeListenerTo;
 	private WelcomeModel welcomeModel;
 
 	private Incident incident;
@@ -209,10 +207,8 @@ public class MainFrame extends JFrame implements Observer {
 		//dateFromComboBox.addItemListener(new ItemChangeListener());
 		//dateToComboBox.addItemListener(new ItemChangeListener());
 		
-		welcomeListenerFrom = new WelcomeListenerFrom(dateFromComboBox , welcomeModel);
-		dateFromComboBox.addActionListener(welcomeListenerFrom);
-		welcomeListenerTo = new WelcomeListenerTo(dateToComboBox , welcomeModel);
-		dateToComboBox.addActionListener(welcomeListenerTo);
+		dateFromComboBox.addActionListener(new WelcomeListenerFrom());
+		dateToComboBox.addActionListener(new WelcomeListenerTo());
 		
 		jpTop.add(jpDates, BorderLayout.EAST);
 		
