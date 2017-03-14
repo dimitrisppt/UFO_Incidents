@@ -35,6 +35,8 @@ public class IncidentsFetcher extends Observable{
 			incidentsList =  ripley.getIncidentsInRange(start, end);
 			long endTime = System.currentTimeMillis();
 			updatefetchTimeString(startTime, endTime);
+		}else{
+			incidentsList = null;
 		}
 	}
 	
@@ -79,7 +81,7 @@ public class IncidentsFetcher extends Observable{
 	
 	private void updateValidDates(){
 		if(new Integer(startDate) != null && new Integer(endDate) != null){
-			validDates = (startDate < endDate);
+			validDates = (startDate < endDate) && (startDate > ripley.getStartYear()) && (endDate < ripley.getLatestYear()) ;
 		}else{
 			validDates = false;
 		}
