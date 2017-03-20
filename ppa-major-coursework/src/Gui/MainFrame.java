@@ -32,6 +32,7 @@ import api.ripley.Incident;
 import api.ripley.Ripley;
 import map.InfoModel;
 import map.MapInformationWindow;
+import model.IncidentsFetcher;
 
 
 public class MainFrame extends JFrame implements Observer {
@@ -61,7 +62,7 @@ public class MainFrame extends JFrame implements Observer {
 	private JPanel leftCard;
 	private WelcomePanel welcomePanel;
 	private WelcomeModel welcomeModel;
-
+	private IncidentsFetcher incidentsFetcher;
 	private Incident incident;
 	public static void main(String[] args) {
 
@@ -78,8 +79,9 @@ public class MainFrame extends JFrame implements Observer {
 		
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		years = new ArrayList<Integer>();
-		welcomeModel = new WelcomeModel();
-		welcomePanel = new WelcomePanel(welcomeModel);
+		incidentsFetcher = new IncidentsFetcher();
+		
+		welcomePanel = new WelcomePanel(incidentsFetcher);
 		//MapInformationWindow window = new MapInformationWindow(new InfoModel());
 		
 		
@@ -206,9 +208,9 @@ public class MainFrame extends JFrame implements Observer {
 
 		//dateFromComboBox.addItemListener(new ItemChangeListener());
 		//dateToComboBox.addItemListener(new ItemChangeListener());
-		
-		dateFromComboBox.addActionListener(new WelcomeListenerFrom());
-		dateToComboBox.addActionListener(new WelcomeListenerTo());
+
+		dateFromComboBox.addActionListener(new WelcomeListenerFrom(incidentsFetcher));
+		dateToComboBox.addActionListener(new WelcomeListenerTo(incidentsFetcher));
 		
 		jpTop.add(jpDates, BorderLayout.EAST);
 		

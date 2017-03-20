@@ -8,10 +8,16 @@ import model.IncidentsFetcher;
 
 	public class WelcomeListenerFrom implements ActionListener {
 		
+		private IncidentsFetcher fetcher;
+		
+		public WelcomeListenerFrom(IncidentsFetcher ifetcher) {
+			fetcher = ifetcher;
+		}
+		
 		public void actionPerformed(ActionEvent e){
 			JComboBox<Integer> fromComboBox = (JComboBox) e.getSource();
 			int startYear = (int) fromComboBox.getItemAt(fromComboBox.getSelectedIndex());
-            new IncidentsFetcher().setStartDate(startYear);
+            fetcher.setStartDate(startYear);
         }
 	}
 	
