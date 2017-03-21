@@ -64,6 +64,8 @@ public class MainFrame extends JFrame implements Observer {
 	private WelcomeModel welcomeModel;
 	private IncidentsFetcher incidentsFetcher;
 	private Incident incident;
+	private StatisticsPanel statsPanel;
+	
 	public static void main(String[] args) {
 
 		MainFrame mainFrame = new MainFrame();
@@ -80,7 +82,7 @@ public class MainFrame extends JFrame implements Observer {
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		years = new ArrayList<Integer>();
 		incidentsFetcher = new IncidentsFetcher();
-		
+		statsPanel = new StatisticsPanel(incidentsFetcher);
 		welcomePanel = new WelcomePanel(incidentsFetcher);
 		//MapInformationWindow window = new MapInformationWindow(new InfoModel());
 		
@@ -120,12 +122,13 @@ public class MainFrame extends JFrame implements Observer {
 		//centerLabel.setOpaque(false);
 		//centerCard.add(centerLabel);
 
-        rightCard = new JPanel();
+        rightCard = statsPanel;
         rightCard.setOpaque(false);
-        rightLabel = new JLabel("RIGHT");
-        rightLabel.setForeground(Color.white);
-        rightLabel.setOpaque(false);
-        rightCard.add(rightLabel);
+        statsPanel.setForeground(Color.white);
+        //rightLabel = new JLabel("RIGHT");
+        //rightLabel.setForeground(Color.white);
+        //rightLabel.setOpaque(false);
+        //rightCard.add(rightLabel);
         
         leftCard = new JPanel();
         leftCard.setOpaque(false);

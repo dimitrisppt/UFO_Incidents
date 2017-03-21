@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.omg.CORBA.portable.IndirectionException;
+
 import api.ripley.Incident;
 
 public class StatsModel extends Observable implements Observer{
@@ -37,17 +39,11 @@ public class StatsModel extends Observable implements Observer{
 	
 	
 	
-	public StatsModel() {
+	public StatsModel(IncidentsFetcher iFetcher) {
 		stateSightings = new int[50];
-		fetcher = new IncidentsFetcher();
+		fetcher = iFetcher;
 		fetcher.addObserver(this);
-		//fetcher.setStartDate(2013);
-		//fetcher.setEndDate(2014);
 		incidentList = fetcher.getIncidentsList();
-		System.out.println("we create statsModel");
-		//updateHoaxes();
-		//updateNonUSSightings();
-		//updateLikeliestState();
 	}
 
 	private void updateHoaxes(){
@@ -103,11 +99,6 @@ public class StatsModel extends Observable implements Observer{
 			}
 		}
 		likeliestState = stateNames[max];
-		
-		for (int i = 0; i < stateSightings.length; i++){
-			System.out.println(stateSightings[i] + " for " + stateNames[i]);
-		}
-		
 	}
 	
 	public String getLikeliestState(){
