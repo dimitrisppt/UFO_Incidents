@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.SwingUtilities;
+
 import api.ripley.Incident;
 import api.ripley.Ripley;
 
@@ -29,6 +31,9 @@ public class IncidentsFetcher extends Observable{
 	}
 	
 	private void updateIncidentsInRange(){
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	System.out.println("test");
 		if(validDates){
 			System.out.println("getting incidents");
 			long startTime = System.currentTimeMillis();
@@ -41,6 +46,8 @@ public class IncidentsFetcher extends Observable{
 		}else{
 			incidentsList = null;
 		}
+            }
+        });
 	}
 	
 	private void updatefetchTimeString(long startTime, long endTime){
