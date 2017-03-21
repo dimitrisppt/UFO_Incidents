@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.omg.CORBA.portable.IndirectionException;
+import javax.swing.SwingUtilities;
 
 import api.ripley.Incident;
 
@@ -18,6 +18,7 @@ public class StatsModel extends Observable implements Observer{
 	private String likeliestState;
 	
 	private int[] stateSightings;
+	
 	
 	private final String[] stateNames = {"Alabama","Alaska","Arizona","Arkansas","California",
 										 "Colorado","Connecticut","Delaware","Florida","Georgia",
@@ -38,14 +39,16 @@ public class StatsModel extends Observable implements Observer{
 	
 	
 	
-	
+	//Constructor
 	public StatsModel(IncidentsFetcher iFetcher) {
-		stateSightings = new int[50];
+		//initialising variables
+		stateSightings = new int[stateAbbreviations.length];
 		fetcher = iFetcher;
 		fetcher.addObserver(this);
 		incidentList = fetcher.getIncidentsList();
 	}
 
+	//updates the hoaxes statistic
 	private void updateHoaxes(){
 		hoaxes = 0;
 		for (Incident incident : incidentList){
@@ -56,48 +59,56 @@ public class StatsModel extends Observable implements Observer{
 		}
 	}
 	
+	
 	public int getHoaxes(){
 		return hoaxes;
 	}
 	
-	
-	//checking for incidents with no specified state.
+	//updates non US sightings statistic by checking for incidents with no specified state.
 	//incidents inside the U.S without a specified state will be counted towards non U.S sightings.
 	private void updateNonUSSightings(){
+		//resets nonUSSightings
 		nonUSSightings = 0;
+		//checks each incident for the string "Not specified."
 		for (Incident incident : incidentList){
-			if (incident.getState().contains("specified")){
+			if (incident.getState().equals("Not specified.")){
+				//increment when "Not specified." is found
 				nonUSSightings++;
 			}
 		}
-		System.out.println(nonUSSightings);
 	}
 	
 	public int getNonUSSightings(){
 		return nonUSSightings;
 	}
 	
-	
+	//updates likeliestState statistic by checking for the state with the most sightings
 	private void updateLikeliestState(){
 		//resets vales for state sightings
 		for (int i = 0; i < stateSightings.length; i++){
 			stateSightings[i] = 0;
 		}
 		
+		//for each sighting's state it it goes through each stateAbbrevation to check for a match
 		for (Incident incident : incidentList){
+			String incidentState = incident.getState();
 			for (int i = 0; i < stateSightings.length; i++){
-				if(incident.getState().equals(stateAbbreviations[i])){
+				if(incidentState.equals(stateAbbreviations[i])){
+					//increments the state's value in the sightings array if match is found
 					stateSightings[i] ++;
 				}
 			}
 		}
 		
+		//after the sightings array is updated above looks for the index with the maximum value
 		int max = 0;
 		for (int i = 0; i<stateSightings.length; i++){
 			if(stateSightings[i] > stateSightings[max]){
 				max = i;
 			}
 		}
+		//indices in stateSightings corresponds indices in stateSightings 
+		//so we can use the same index to find the name of the state
 		likeliestState = stateNames[max];
 	}
 	
@@ -108,15 +119,24 @@ public class StatsModel extends Observable implements Observer{
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("test");
+		
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+		//gets new incident list
 		incidentList = fetcher.getIncidentsList();
-		if(incidentList != null){
-			updateHoaxes();
-			updateNonUSSightings();
-			updateLikeliestState();
+		//if incident list isn't null and the dates are valid statistics will be updated and observers notified
+		if(incidentList != null && fetcher.isValidDates()){
+			updateStatistics();
 			updateObservers();
-			System.out.println("update happened");
 		}
+		
+            }});
+	}
+	
+	private void updateStatistics(){
+		updateHoaxes();
+		updateNonUSSightings();
+		updateLikeliestState();
 	}
 	
 	private void updateObservers(){
@@ -127,5 +147,5 @@ public class StatsModel extends Observable implements Observer{
 	
 	
 	
-	//google api shit
+	// do google api stuff
 }

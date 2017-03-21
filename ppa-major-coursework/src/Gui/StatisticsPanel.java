@@ -29,8 +29,18 @@ public class StatisticsPanel extends JPanel implements Observer {
 	private boolean[] positionBools = {false, false, false, false, false, false, false, false};
 	private StatsModel model;
 	
+	//This class is quite confusing but bear with me
 	
-	//TODO: check if initMainWidgets() works if put above StatisticsSubPanel inner class
+	/* The main Statistic Panel has inside it 4 sub panels that all act the same way
+	 * The sub panels have two JLabels for a title and the actual statistic as well as buttons to change them
+	 * The main panel has two arrays 8 elements big for the title and the statistic
+	 * The subpanels work by having a "position" that corresponds with the index on the title and statistic array
+	 * They display the statistic and title by getting them from the arrays in the same index as their position
+	 * They change position in such a way that no two panels can have the same position
+	 * This is done by looking to another array of bools that say if that position is occupied or not
+	 *
+	 * */
+	
 	
 	StatisticsPanel(IncidentsFetcher iFetcher){
 		super();	
@@ -38,6 +48,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 		model = new StatsModel(iFetcher);
 		model.addObserver(this);
 		
+		//initialising titles
 		titles[0] = "Hoaxes";
 		titles[1] = "Non US Sightings";
 		titles[2] = "Next Likeliest State";
@@ -47,6 +58,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 		titles[6] = "T6";
 		titles[7] = "T7";
 		
+		//initialising statistics
 		stats[0] = new Integer(model.getHoaxes()).toString();
 		stats[1] = new Integer(model.getNonUSSightings()).toString();
 		stats[2] = model.getLikeliestState();
@@ -56,48 +68,56 @@ public class StatisticsPanel extends JPanel implements Observer {
 		stats[6] = "S6";
 		stats[7] = "S7";
 		
-		subPanel0 = new StatisticsSubPanel(0);
-		subPanel1 = new StatisticsSubPanel(1);
-		subPanel2 = new StatisticsSubPanel(2);
-		subPanel3 = new StatisticsSubPanel(3);
+		initMainPanelWidgets();
+	}
+	
+	public void initMainPanelWidgets(){
+		//creating subpanels
+		subPanel0 = new StatisticsSubPanel();
+		subPanel1 = new StatisticsSubPanel();
+		subPanel2 = new StatisticsSubPanel();
+		subPanel3 = new StatisticsSubPanel();
+		
 		subPanel0.setOpaque(false);
 		subPanel1.setOpaque(false);
 		subPanel2.setOpaque(false);
 		subPanel3.setOpaque(false);
-		initMainWidgets();
+		
+		setLayout(new GridLayout(2, 2));
+		add(subPanel0);
+		add(subPanel1);
+		add(subPanel2);
+		add(subPanel3);
 	}
 
+	/*---------------------------------Start of sub panel class------------------------------------*/
 	
+	//Sub panel class
 	public class StatisticsSubPanel extends JPanel {
 
 		private JLabel title;
 		private JLabel statistic;
 		private int position;
 		
+		//Constructor
 		StatisticsSubPanel() {
 			super();
-			initWidgets();
+			initSubPanelWidgets();
 			setBorder(new EtchedBorder(EtchedBorder.RAISED));
+			
+			//takes the first unoccupied position
 			for (int i = 0; i < positionBools.length ; i ++){
 				if (!positionBools[i]){
 					position = i;
-					positionBools[i] = true;
 					setStatisticPosition(i);
 					break;
 				}
 			}
 		}
 		
-		StatisticsSubPanel(int index){
-			super();
-			initWidgets();
-			position = index;
-			setStatisticPosition(index);
-			setBorder(new EtchedBorder(EtchedBorder.RAISED));
-		}
 
-		private void initWidgets() {
-
+		private void initSubPanelWidgets() {
+			//button stuff
 			JButton leftButton = new JButton("<");
 			JButton rightButton = new JButton(">");
 
@@ -106,37 +126,34 @@ public class StatisticsPanel extends JPanel implements Observer {
 			rightButton.setFont(buttonFont);
 			rightButton.addActionListener(new StatsButtonListeners(true));
 			leftButton.addActionListener(new StatsButtonListeners(false));
-			// leftButton.setBorderPainted(false);
-			// leftButton.setFocusPainted(false);
-			// leftButton.setContentAreaFilled(false);
 
 			this.setLayout(new BorderLayout());
 
 			this.add(leftButton, BorderLayout.WEST);
 			this.add(rightButton, BorderLayout.EAST);
 
-			
+			//title and statistic stuff
 			title = new JLabel("Title");
 			title.setForeground(Color.WHITE);
 			statistic = new JLabel("");
 			statistic.setForeground(Color.WHITE);
 			title.setHorizontalAlignment(SwingConstants.CENTER);
 			statistic.setHorizontalAlignment(SwingConstants.CENTER);
-
 			title.setFont(new Font("Dialog", Font.BOLD, 22));
 			statistic.setFont(new Font("Dialog", Font.BOLD, 44));
+			
 			this.add(title, BorderLayout.NORTH);
 			this.add(statistic, BorderLayout.CENTER);
 
 			this.setMinimumSize(new Dimension(300, 300));
-			//find appropriate border
-			//setBorder(new B);
 		}
 		
-		public void setStat(String newStat){
+		private void setStat(String newStat){
 			statistic.setText(newStat);
 		}
 		
+		//updates title and statistic according to new position
+		//also updates the boolean array to occupy new position
 		public void setStatisticPosition(int index){
 			positionBools[position] = false;
 			title.setText(titles[index]);
@@ -147,6 +164,8 @@ public class StatisticsPanel extends JPanel implements Observer {
 			this.repaint();
 		}
 		
+		//moved the panel to the next unoccupied position to the right. 
+		//Rolls over to start if no unoccupied positions to the right
 		public void moveRight(){
 			int newPosition = position;
 			while(positionBools[newPosition]){
@@ -156,6 +175,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 			setStatisticPosition(newPosition);
 		}
 		
+		//same as moveRight but towards the left
 		public void moveLeft(){
 			int newPosition = position;
 			while(positionBools[newPosition]){
@@ -168,6 +188,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 			return position;
 		}
 		
+		//Listener class for the buttons
 		public class StatsButtonListeners implements ActionListener{
 
 			boolean goRight;
@@ -186,16 +207,13 @@ public class StatisticsPanel extends JPanel implements Observer {
 		}
 	}
 	
-	public void initMainWidgets(){
-		setLayout(new GridLayout(2, 2));
-		add(subPanel0);
-		add(subPanel1);
-		add(subPanel2);
-		add(subPanel3);
-	}
+	/*------------------------------------End of sub panel class-------------------------------------*/
+	
 
+	
 	@Override
 	public void update(Observable o, Object arg) {
+		//updates statistics values in the statistics array
 		stats[0] = new Integer(model.getHoaxes()).toString();
 		stats[1] = new Integer(model.getNonUSSightings()).toString();
 		stats[2] = model.getLikeliestState();
@@ -206,7 +224,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 		stats[7] = "S7";
 		
 		
-		
+		//changes the value of the statistic in each sub panel according to their position
 		subPanel0.setStat(stats[subPanel0.getPosition()]);
 		subPanel1.setStat(stats[subPanel1.getPosition()]);
 		subPanel2.setStat(stats[subPanel2.getPosition()]);
