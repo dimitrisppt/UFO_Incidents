@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import model.IncidentsFetcher;
 import model.StatsModel;
 
 public class StatisticsPanel extends JPanel implements Observer {
@@ -31,10 +32,11 @@ public class StatisticsPanel extends JPanel implements Observer {
 	
 	//TODO: check if initMainWidgets() works if put above StatisticsSubPanel inner class
 	
-	StatisticsPanel(){
+	StatisticsPanel(IncidentsFetcher iFetcher){
 		super();	
 		
-		model = new StatsModel();
+		model = new StatsModel(iFetcher);
+		model.addObserver(this);
 		
 		titles[0] = "Hoaxes";
 		titles[1] = "Non US Sightings";
@@ -196,12 +198,14 @@ public class StatisticsPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		stats[0] = new Integer(model.getHoaxes()).toString();
 		stats[1] = new Integer(model.getNonUSSightings()).toString();
-		stats[2] = new Integer(model.getLikeliestState()).toString();
+		stats[2] = model.getLikeliestState();
 		stats[3] = "S3";
 		stats[4] = "S4";
 		stats[5] = "S5";
 		stats[6] = "S6";
 		stats[7] = "S7";
+		
+		
 		
 		subPanel0.setStat(stats[subPanel0.getPosition()]);
 		subPanel1.setStat(stats[subPanel1.getPosition()]);
