@@ -55,17 +55,17 @@ public class StatisticsPanel extends JPanel implements Observer {
 		titles[1] = "Non US Sightings";
 		titles[2] = "Next Likeliest State";
 		titles[3] = "T3";
-		titles[4] = "T4";
+		titles[4] = "Year with most incidents";
 		titles[5] = "T5";
 		titles[6] = "T6";
 		titles[7] = "T7";
 		
 		//initialising statistics
-		stats[0] = new Integer(model.getHoaxes()).toString();
-		stats[1] = new Integer(model.getNonUSSightings()).toString();
+		stats[0] = model.getHoaxes();
+		stats[1] = model.getNonUSSightings();
 		stats[2] = model.getLikeliestState();
 		stats[3] = "S3";
-		stats[4] = "S4";
+		stats[4] = model.getYearWithMostIncidents();
 		stats[5] = "S5";
 		stats[6] = "S6";
 		stats[7] = "S7";
@@ -127,6 +127,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 			position = index;
 			setStatisticPosition(index);
 			setBorder(new EtchedBorder(EtchedBorder.RAISED));
+			this.panelNumber = panelNumber;
 		}
 		
 
@@ -232,11 +233,11 @@ public class StatisticsPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		//updates statistics values in the statistics array
-		stats[0] = new Integer(model.getHoaxes()).toString();
-		stats[1] = new Integer(model.getNonUSSightings()).toString();
+		stats[0] = model.getHoaxes();
+		stats[1] = model.getNonUSSightings();
 		stats[2] = model.getLikeliestState();
 		stats[3] = "S3";
-		stats[4] = "S4";
+		stats[4] = model.getYearWithMostIncidents();
 		stats[5] = "S5";
 		stats[6] = "S6";
 		stats[7] = "S7";

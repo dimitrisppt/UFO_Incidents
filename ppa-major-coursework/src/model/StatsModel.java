@@ -17,6 +17,8 @@ public class StatsModel extends Observable implements Observer{
 	private int nonUSSightings;
 	private String likeliestState;
 	
+	private YearWithMostIncidents aakashStat;
+	
 	private int[] stateSightings;
 	
 	
@@ -46,6 +48,9 @@ public class StatsModel extends Observable implements Observer{
 		fetcher = iFetcher;
 		fetcher.addObserver(this);
 		incidentList = fetcher.getIncidentsList();
+		
+		//personal statistics
+		aakashStat = new YearWithMostIncidents(fetcher);
 	}
 
 	//updates the hoaxes statistic
@@ -60,8 +65,8 @@ public class StatsModel extends Observable implements Observer{
 	}
 	
 	
-	public int getHoaxes(){
-		return hoaxes;
+	public String getHoaxes(){
+		return new Integer(hoaxes).toString();
 	}
 	
 	//updates non US sightings statistic by checking for incidents with no specified state.
@@ -78,8 +83,8 @@ public class StatsModel extends Observable implements Observer{
 		}
 	}
 	
-	public int getNonUSSightings(){
-		return nonUSSightings;
+	public String getNonUSSightings(){
+		return new Integer(nonUSSightings).toString();
 	}
 	
 	//updates likeliestState statistic by checking for the state with the most sightings
@@ -116,6 +121,12 @@ public class StatsModel extends Observable implements Observer{
 		return likeliestState;
 	}
 	
+	public String getYearWithMostIncidents(){
+		return aakashStat.getYearWithMostIncidents();
+	}
+	
+	
+	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -134,6 +145,8 @@ public class StatsModel extends Observable implements Observer{
 	}
 	
 	private void updateStatistics(){
+		aakashStat.updateYearWithMostIncidents();
+		
 		updateHoaxes();
 		updateNonUSSightings();
 		updateLikeliestState();

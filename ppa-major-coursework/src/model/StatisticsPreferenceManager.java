@@ -13,7 +13,6 @@ public class StatisticsPreferenceManager {
 	private int secondPref;
 	private int thirdPref;
 	private int fourthPref;
-	private int[] preferanceArray;
 	
 	public StatisticsPreferenceManager(){
 		readFiles();
@@ -44,6 +43,7 @@ public class StatisticsPreferenceManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
 	}
 	
 	
