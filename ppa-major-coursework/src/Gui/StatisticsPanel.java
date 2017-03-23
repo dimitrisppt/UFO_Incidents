@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import model.IncidentsFetcher;
+import model.StatisticsPreferenceManager;
 import model.StatsModel;
 
 public class StatisticsPanel extends JPanel implements Observer {
@@ -28,6 +29,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 	private String[] stats = new String[8];
 	private boolean[] positionBools = {false, false, false, false, false, false, false, false};
 	private StatsModel model;
+	private StatisticsPreferenceManager panelPref;
 	
 	//This class is quite confusing but bear with me
 	
@@ -72,11 +74,14 @@ public class StatisticsPanel extends JPanel implements Observer {
 	}
 	
 	public void initMainPanelWidgets(){
-		//creating subpanels
-		subPanel0 = new StatisticsSubPanel();
-		subPanel1 = new StatisticsSubPanel();
-		subPanel2 = new StatisticsSubPanel();
-		subPanel3 = new StatisticsSubPanel();
+		
+		panelPref = new StatisticsPreferenceManager();
+		
+		//creating sub panels
+		subPanel0 = new StatisticsSubPanel(panelPref.getFirstPreference(),0);
+		subPanel1 = new StatisticsSubPanel(panelPref.getSecondPreference(),1);
+		subPanel2 = new StatisticsSubPanel(panelPref.getThirdPreference(),2);
+		subPanel3 = new StatisticsSubPanel(panelPref.getFourthPreference(),3);
 		
 		subPanel0.setOpaque(false);
 		subPanel1.setOpaque(false);
@@ -98,6 +103,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 		private JLabel title;
 		private JLabel statistic;
 		private int position;
+		private int panelNumber;
 		
 		//Constructor
 		StatisticsSubPanel() {
@@ -113,6 +119,14 @@ public class StatisticsPanel extends JPanel implements Observer {
 					break;
 				}
 			}
+		}
+		
+		StatisticsSubPanel(int index, int panelNumber){
+			super();
+			initSubPanelWidgets();
+			position = index;
+			setStatisticPosition(index);
+			setBorder(new EtchedBorder(EtchedBorder.RAISED));
 		}
 		
 
@@ -173,6 +187,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 			}
 			
 			setStatisticPosition(newPosition);
+			panelPref.replacePreferance(panelNumber, newPosition);
 		}
 		
 		//same as moveRight but towards the left
@@ -182,6 +197,7 @@ public class StatisticsPanel extends JPanel implements Observer {
 				newPosition = (((newPosition - 1)%8)+8)%8;
 			}
 			setStatisticPosition(newPosition);
+			panelPref.replacePreferance(panelNumber, newPosition);
 		}
 		
 		public int getPosition(){
@@ -191,17 +207,19 @@ public class StatisticsPanel extends JPanel implements Observer {
 		//Listener class for the buttons
 		public class StatsButtonListeners implements ActionListener{
 
+			//goRight checks if the button is a button to go right or go left
 			boolean goRight;
 			public StatsButtonListeners(boolean goRight) {
 				this.goRight = goRight;
 			}
 			
+			//calls move methods depending on if the button goes right or left
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(goRight){
-					moveRight();
+						moveRight();
 				}else{
-					moveLeft();
+						moveLeft();
 				}
 			}
 		}
