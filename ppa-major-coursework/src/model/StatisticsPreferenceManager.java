@@ -8,7 +8,7 @@ import java.util.List;
 public class StatisticsPreferenceManager {
 
 	private List<String> preferenceList;
-	private final static String FILE_PATH = "src/StatisticsPreferences";
+	private final static String FILE_PATH = "src/StatisticsPreferences.txt";
 	private int firstPref;
 	private int secondPref;
 	private int thirdPref;
