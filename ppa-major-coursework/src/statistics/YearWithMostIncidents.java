@@ -1,7 +1,8 @@
-package model;
+package statistics;
 
 import java.util.ArrayList;
 import api.ripley.Incident;
+import model.IncidentsFetcher;
 
 public class YearWithMostIncidents {
 	
@@ -15,9 +16,9 @@ public class YearWithMostIncidents {
 	}
 	
 	public void updateYearWithMostIncidents(){
-		//incidentsList = fetcher.getIncidentsList();
 		counter = 0;
-            	
+        yearWithMostIncidents = 0;
+		
         incidentsList = fetcher.getIncidentsList();
         
 		for (int i = fetcher.getStartDate(); i < fetcher.getEndDate()+1; i++){

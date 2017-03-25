@@ -33,7 +33,6 @@ public class IncidentsFetcher extends Observable{
 	private void updateIncidentsInRange(){
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	System.out.println("test");
 		if(validDates){
 			System.out.println("getting incidents");
 			long startTime = System.currentTimeMillis();
@@ -74,7 +73,6 @@ public class IncidentsFetcher extends Observable{
 	public void setStartDate(int startYear){
 		fetchedIncidents = false;
 		startDate = startYear;
-		System.out.println("start date changed in fetcher");
 		updateValidDates();
 		updateIncidentsInRange();
 		updateObservers();
@@ -83,7 +81,6 @@ public class IncidentsFetcher extends Observable{
 	public void setEndDate(int endYear){
 		fetchedIncidents = false;
 		endDate = endYear;
-		System.out.println("end date changed in fetcher");
 		updateValidDates();
 		updateIncidentsInRange();
 		updateObservers();
@@ -120,7 +117,6 @@ public class IncidentsFetcher extends Observable{
 	}
 	
 	private void updateObservers(){
-		System.out.println("update happened in fetcher");
 		setChanged();
 		notifyObservers();
 		
