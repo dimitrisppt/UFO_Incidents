@@ -56,8 +56,8 @@ public class StatisticsPanel extends JPanel implements Observer {
 		titles[2] = "Next Likeliest State";
 		titles[3] = "T3";
 		titles[4] = "Year with most incidents";
-		titles[5] = "T5";
-		titles[6] = "T6";
+		titles[5] = "Most Common UFO shape";
+		titles[6] = "Total Number Of Incidents";
 		titles[7] = "T7";
 		
 		//initialising statistics
@@ -66,8 +66,8 @@ public class StatisticsPanel extends JPanel implements Observer {
 		stats[2] = model.getLikeliestState();
 		stats[3] = "S3";
 		stats[4] = model.getYearWithMostIncidents();
-		stats[5] = "S5";
-		stats[6] = "S6";
+		stats[5] = model.getMostCommonShape();
+		stats[6] = model.getTotalIncidents();
 		stats[7] = "S7";
 		
 		initMainPanelWidgets();
@@ -238,8 +238,8 @@ public class StatisticsPanel extends JPanel implements Observer {
 		stats[2] = model.getLikeliestState();
 		stats[3] = "S3";
 		stats[4] = model.getYearWithMostIncidents();
-		stats[5] = "S5";
-		stats[6] = "S6";
+		stats[5] = model.getMostCommonShape();
+		stats[6] = model.getTotalIncidents();
 		stats[7] = "S7";
 		
 		

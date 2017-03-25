@@ -7,6 +7,9 @@ import java.util.Observer;
 import javax.swing.SwingUtilities;
 
 import api.ripley.Incident;
+import statistics.MostCommonShape;
+import statistics.TotalIncidents;
+import statistics.YearWithMostIncidents;
 
 public class StatsModel extends Observable implements Observer{
 
@@ -18,6 +21,8 @@ public class StatsModel extends Observable implements Observer{
 	private String likeliestState;
 	
 	private YearWithMostIncidents aakashStat;
+	private MostCommonShape dimitrisStat;
+	private TotalIncidents henryStat;
 	
 	private int[] stateSightings;
 	
@@ -51,6 +56,8 @@ public class StatsModel extends Observable implements Observer{
 		
 		//personal statistics
 		aakashStat = new YearWithMostIncidents(fetcher);
+		dimitrisStat = new MostCommonShape(fetcher);
+		henryStat = new TotalIncidents(fetcher);
 	}
 
 	//updates the hoaxes statistic
@@ -121,11 +128,19 @@ public class StatsModel extends Observable implements Observer{
 		return likeliestState;
 	}
 	
+	
+	
 	public String getYearWithMostIncidents(){
 		return aakashStat.getYearWithMostIncidents();
 	}
 	
+	public String getTotalIncidents(){
+		return henryStat.getTotalIncidents();
+	}
 	
+	public String getMostCommonShape(){
+		return dimitrisStat.getShape();
+	}
 	
 	
 	@Override
@@ -146,6 +161,9 @@ public class StatsModel extends Observable implements Observer{
 	
 	private void updateStatistics(){
 		aakashStat.updateYearWithMostIncidents();
+		dimitrisStat.updateMostCommonShape();
+		henryStat.updateTotalIncidents();
+		
 		
 		updateHoaxes();
 		updateNonUSSightings();
