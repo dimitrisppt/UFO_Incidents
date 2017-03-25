@@ -3,42 +3,47 @@ package Gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
+
 import java.awt.FlowLayout;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.AbstractButton;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
 
-import javax.swing.ListCellRenderer;
+import javax.swing.JPanel;
 
 import javax.swing.SwingConstants;
 
-import Listeners.ItemChangeListener;
+
 import Listeners.MainActionListener;
 import Listeners.MainComboBoxListener;
 import api.ripley.Incident;
 import api.ripley.Ripley;
-import map.InfoModel;
-import map.MapInformationWindow;
 import model.IncidentsFetcher;
 
+/**
+ * The MainFrame is responsible for the GUI of the application.
+ * All subpanels are included and the interaction between them is done with two buttons.
+ * The initial panel is always the welcome panel followed by map statistics and game panel.
+ * There are combo boxes at the top right hand side where you can select a range of years.
+ *  
+ * @author Dimitris Papatheodoulou
+ *
+ */
 
 public class MainFrame extends JFrame implements Observer {
 	
+	// Declaring fields
 	private Ripley ripley;
-	
 	private JPanel cards;
 	private JLabel labelFrom;
 	private JLabel labelTo;
@@ -55,16 +60,13 @@ public class MainFrame extends JFrame implements Observer {
 	private JLabel background;
 	private JPanel jpCenter;
 	private JPanel centerCard;
-	private JLabel centerLabel;
-	private JLabel rightLabel;
 	private JPanel rightCard;
 	private JLabel leftLabel;
 	private JPanel leftCard;
 	private WelcomePanel welcomePanel;
-	private WelcomeModel welcomeModel;
 	private IncidentsFetcher incidentsFetcher;
-	private Incident incident;
 	private StatisticsPanel statsPanel;
+	
 	
 	public static void main(String[] args) {
 
@@ -73,25 +75,33 @@ public class MainFrame extends JFrame implements Observer {
 	}
 
 	
-	
+	/**
+	 * The constructor initialises all panels.
+	 * Creates a Ripley object with authentication keys.
+	 * Initialises all the widgets.
+	 */
 	public MainFrame() {
 		
 		super("UFO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon img = new ImageIcon("src/Ufos/Ufo5.png");
+		// Sets the icon of the frame to a UFO image.
+		this.setIconImage(img.getImage());
 		
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		years = new ArrayList<Integer>();
 		incidentsFetcher = new IncidentsFetcher();
+		incidentsFetcher.addObserver(this);
 		statsPanel = new StatisticsPanel(incidentsFetcher);
 		welcomePanel = new WelcomePanel(incidentsFetcher);
-		//MapInformationWindow window = new MapInformationWindow(new InfoModel());
-		
 		
 		initWidgets();
 	}
 
 	
-
+	/**
+	 * Initialises the widgets.
+	 */
 	public void initWidgets() {
 
 		background = setBackground();
@@ -105,30 +115,33 @@ public class MainFrame extends JFrame implements Observer {
 		
 		setBottomPanel();
 		
-		
 		pack();
 		setVisible(true);
 		
 	}
 	
 	
-	
+	/**
+	 * Adds the panels to their positions using CardLayout.
+	 * The first card is the welcome panel, the second is the map,
+	 * the third is the statistics and the forth is the game panel.
+	 * 
+	 * @param label
+	 * @return cards
+	 */
 	public JPanel setPanels(JLabel label) {
 		
+		// Sets the first card to the welcome panel.
 		centerCard = welcomePanel;
+		// Makes the card transparent.
 		centerCard.setOpaque(false);
-		//centerLabel = new JLabel("CENTER");
-		//centerLabel.setForeground(Color.white);
-		//centerLabel.setOpaque(false);
-		//centerCard.add(centerLabel);
 
+		// Sets the second card to the statistics panel
         rightCard = statsPanel;
+        // Makes the card transparent.
         rightCard.setOpaque(false);
         statsPanel.setForeground(Color.white);
-        //rightLabel = new JLabel("RIGHT");
-        //rightLabel.setForeground(Color.white);
-        //rightLabel.setOpaque(false);
-        //rightCard.add(rightLabel);
+       
         
         leftCard = new JPanel();
         leftCard.setOpaque(false);
@@ -137,6 +150,7 @@ public class MainFrame extends JFrame implements Observer {
         leftLabel.setOpaque(false);
         leftCard.add(leftLabel);
         
+        // Creates a JPanel of cards with CardLayout.
         cards = new JPanel(new CardLayout());
         cards.setOpaque(false);
         cards.add(centerCard, "Center");
@@ -150,9 +164,12 @@ public class MainFrame extends JFrame implements Observer {
 	
 	
 	
-	
+	/**
+	 * Sets the background of the frame to a gif.
+	 * @return backLabel
+	 */
 	public JLabel setBackground() {
-		
+		//Creates an ImageIcon using a specific path.
 		ImageIcon backgroundStars = new ImageIcon("src/Gui/source.gif");
 		ImageIcon image = backgroundStars;
 		int width = 1000;
@@ -166,29 +183,30 @@ public class MainFrame extends JFrame implements Observer {
 	}
 	
 	
-	
-	
-
+	/**
+	 * Sets up the top panel that contains two combo boxes with a range of years.
+	 */
 	public void setTopPanel() {
 		
 		dateFromComboBox = new JComboBox<Integer>();
 		dateToComboBox = new JComboBox<Integer>();
 
-		dateFromComboBox.setToolTipText("All available years.");
-		dateToComboBox.setToolTipText("All available years.");
+		dateFromComboBox.setToolTipText("Please select a starting year.");
+		dateToComboBox.setToolTipText("Please select an ending year.");
 
 		for (int i = 0; i <= ripley.getLatestYear() - ripley.getStartYear(); i++) {
 
 			years.add(ripley.getStartYear() + i);
 			dateFromComboBox.addItem(years.get(i));
 			dateToComboBox.addItem(years.get(i));
-
 		}
 
 		dateFromComboBox.setSelectedIndex(-1);
+		// Sets the first entry of the combo box to '-' (blank).
 		dateFromComboBox.setRenderer(new MainComboBoxListener("    -"));
 
 		dateToComboBox.setSelectedIndex(-1);
+		// Sets the first entry of the combo box to '-' (blank).
 		dateToComboBox.setRenderer(new MainComboBoxListener("    -"));
 
 		labelFrom = new JLabel("From: ", SwingConstants.RIGHT);
@@ -209,21 +227,21 @@ public class MainFrame extends JFrame implements Observer {
 		jpDates.add(labelTo);
 		jpDates.add(dateToComboBox);
 
-		//dateFromComboBox.addItemListener(new ItemChangeListener());
-		//dateToComboBox.addItemListener(new ItemChangeListener());
-
+		// Adding action listeners to the combo boxes.
 		dateFromComboBox.addActionListener(new WelcomeListenerFrom(incidentsFetcher));
 		dateToComboBox.addActionListener(new WelcomeListenerTo(incidentsFetcher));
 		
 		jpTop.add(jpDates, BorderLayout.EAST);
 		
-		
 		background.add(jpTop, BorderLayout.NORTH);
+		
 	}
 	
 	
 	
-	
+	/**
+	 * Creates a new central panel.
+	 */
 	public void setCenterPanel() {
 		
 		jpCenter = new JPanel();
@@ -234,21 +252,23 @@ public class MainFrame extends JFrame implements Observer {
 	}
 	
 	
-	
+	/**
+	 * Sets up the bottom panel with the buttons and ripley's last updated date.
+	 */
 	public void setBottomPanel() {
 		
 		jpBottom = new JPanel();
 		jpBottom.setOpaque(false);
 		
 		jbLeft = new JButton("<");
-		jbLeft.setEnabled(true);
+		jbLeft.setEnabled(false);
 		jbRight = new JButton(">");
-		jbRight.setEnabled(true);
+		jbRight.setEnabled(false);
+		jbRight.setToolTipText("Please select a valid date range to activate buttons.");
+		jbRight.setToolTipText("Please select a valid date range to activate buttons.");
 		
 		labelLastUpdate = new JLabel(ripley.getLastUpdated(), SwingConstants.CENTER);
 		labelLastUpdate.setForeground(Color.white);
-		
-	
 		
 		jpBottom.setLayout(new BorderLayout());
 		
@@ -256,18 +276,38 @@ public class MainFrame extends JFrame implements Observer {
 		jpBottom.add(jbRight, BorderLayout.EAST);
 		jpBottom.add(labelLastUpdate, BorderLayout.CENTER);
 		
+		/* Adding action listeners to the buttons by passing as parameters the panels and true or false,
+		 * to differentiate left from right button.
+		 */
 		jbLeft.addActionListener(new MainActionListener(panels, true));
 		jbRight.addActionListener(new MainActionListener(panels, false));
 		
 		background.add(jpBottom, BorderLayout.SOUTH);
-
+		
 	}
 
 
-
+	/*
+	 * Updates the buttons to disabled or enabled depending whether the selected dates 
+	 * are valid or not.
+	 * 
+	 * (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		
+		if (incidentsFetcher.isValidDates()) {
+			jbRight.setEnabled(true);
+			jbLeft.setEnabled(true);
+			jbRight.setToolTipText("Press to switch to the next panel.");
+			jbLeft.setToolTipText("Press to switch to the previous panel.");
+		} else {
+			jbRight.setEnabled(false);
+			jbLeft.setEnabled(false);
+			jbRight.setToolTipText("Please select a valid date range to activate buttons.");
+			jbRight.setToolTipText("Please select a valid date range to activate buttons.");
+		}
 		
 	}
 
