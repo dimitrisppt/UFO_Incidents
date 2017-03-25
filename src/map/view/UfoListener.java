@@ -3,13 +3,20 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import map.InfoModel;
+import map.MapInformationWindow;
+import model.IncidentsFetcher;
+
 public class UfoListener implements MouseListener {
 	private RectGroup r;
 	private StateGroup s;
+	private MapInformationWindow mapWindow;
+	private IncidentsFetcher fetcher;
 	
-	public UfoListener(RectGroup r, StateGroup s){
+	public UfoListener(IncidentsFetcher fetcher, RectGroup r, StateGroup s){
 		this.r = r;
 		this.s = s;
+		this.fetcher = fetcher;
 	}
 	
 	
@@ -23,7 +30,8 @@ public class UfoListener implements MouseListener {
 		
 		for (int i = 0; i < r.size(); i++) {
 			if (r.get(i).contains(x,y)) {
-				System.out.println("ALEIN PRESSED:" + s.get(i).getName()); //print name of state clicked
+				
+				mapWindow = new MapInformationWindow(new InfoModel(fetcher, s.get(i).getName())); //print name of state clicked
 				
 			}
 		}
