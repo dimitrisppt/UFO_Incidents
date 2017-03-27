@@ -69,6 +69,8 @@ public class YoutubeStat {
            
             String dTo = Integer.toString(incidents.getEndDate());
             String dFrom = Integer.toString(incidents.getEndDate());
+            //String dTo = "2010-01-01 00:00:00";
+            //String dFrom = "2009-01-01 00:00:00";
             DateFormat dF=new SimpleDateFormat("yyyy-MM-dd");
             Date dateFrom =dF.parse(dFrom);
             Date dateTo = dF.parse(dTo);
@@ -100,4 +102,6 @@ public class YoutubeStat {
     public static int getValue(){
     	return totalResults;
     }
+    
+  
 }

@@ -44,10 +44,12 @@ public class WelcomePanel extends JPanel implements Observer{
 			
 		
 		this.setLayout(new GridLayout(10,1));
+		JLabel emptyPanel = new JLabel("" + SwingConstants.CENTER);
 		JLabel ripleyVersion = new JLabel ("Welcome to the Ripley API v"+ Double.toString(ripley.getVersion()) , SwingConstants.CENTER);
 		ripleyVersion.setForeground(Color.WHITE);
 		JLabel printing = new JLabel("Please select from the dates above, in order to begin analysing UFO sighting data." , SwingConstants.CENTER);
 		printing.setForeground(Color.WHITE);
+		this.add(emptyPanel);
 		this.add(ripleyVersion);
 		this.add(printing);
 		
@@ -107,7 +109,7 @@ public class WelcomePanel extends JPanel implements Observer{
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 		time.setText(incidentsFetcher.getFetchTime());
-		statement.setText("\u001BPlease now interact with this data using the buttons to the left and the right");
+		statement.setText("Please now interact with this data using the buttons to the left and the right");
             }
             });
 	}
