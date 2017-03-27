@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import map.controller.UfoListener;
+import map.model.RectGroup;
+import map.model.StateGroup;
 import model.IncidentsFetcher;
 
 public class Map extends JPanel implements Observer {
@@ -24,10 +27,11 @@ public class Map extends JPanel implements Observer {
 	private IncidentsFetcher fetcher;
 	//private double pixelIncrease = 1;
 	private BufferedImage imageMap;
-	private BufferedImage imageAlien;
+	private BufferedImage imageUfo;
 	private StateGroup s; //the ArrayList containing all states 
 	private RectGroup r;
-	boolean addedMouseListener = false;
+	private boolean addedMouseListener = false;
+	
 	public Map(IncidentsFetcher fetcher) { //constructor for map
 		this.fetcher = fetcher;
 		fetcher.addObserver(this);
@@ -45,7 +49,7 @@ public class Map extends JPanel implements Observer {
 		// storing the images in the private fields 
 		try {
 			imageMap = ImageIO.read(new File("src/map/view/USAnew.png")); //image for Map *do not change*
-			imageAlien = ImageIO.read(new File("src/map/view/Ufo.png")); //image for alien/ufo
+			imageUfo = ImageIO.read(new File("src/map/view/Ufo.png")); //image for alien/ufo
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,7 +65,7 @@ public class Map extends JPanel implements Observer {
 		
 		//drawing each alien
 		for (int i = 0; i < s.size();i++){ //for all states in ArrayList StateGroup
-			g.drawImage(imageAlien, //what image to add
+			g.drawImage(imageUfo, //what image to add
 					(int) getWidth() * s.get(i).getX()/2000, //x coordinates of image
 					(int) getHeight() * s.get(i).getY()/1236, //y coordinates of image
 					(int) (getWidth() * s.get(i).getSightings()/2000),  //pixelIncrease/2000), //width of image (#frameWidth *# noOfSightings in that area * pixelIncreasePerSighting #/ WidthresolutionOfMap#)
