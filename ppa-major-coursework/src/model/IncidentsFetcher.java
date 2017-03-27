@@ -18,6 +18,8 @@ public class IncidentsFetcher extends Observable{
 	private static String fetchTimeString;
 	private boolean fetchedIncidents;
 	
+	//		System.out.println(ripley.getAcknowledgementString());
+
 	public IncidentsFetcher(){
 		ripley = new Ripley("90tLI3GUstGyVD6ql2OMtA==", "lBgm4pVq9gHVqL46EnH7ew==");
 		updateValidDates();
