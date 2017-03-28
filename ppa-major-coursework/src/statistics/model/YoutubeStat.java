@@ -31,7 +31,7 @@ public class YoutubeStat {
     	this.incidents=incidents;
     }
     
-    public void getYoutubeStat(){
+    public void updateYoutubeStat(){
     	// Read the developer key from the properties file.
         Properties properties = new Properties();
         try {
@@ -68,12 +68,12 @@ public class YoutubeStat {
             search.setType("video");
            
             String dTo = Integer.toString(incidents.getEndDate());
-            String dFrom = Integer.toString(incidents.getEndDate());
+            String dFrom = Integer.toString(incidents.getStartDate());
             //String dTo = "2010-01-01 00:00:00";
             //String dFrom = "2009-01-01 00:00:00";
             DateFormat dF=new SimpleDateFormat("yyyy-MM-dd");
-            Date dateFrom =dF.parse(dFrom);
-            Date dateTo = dF.parse(dTo);
+            Date dateFrom =dF.parse(dFrom+"-01-01 00:00:00");
+            Date dateTo = dF.parse(dTo+"-01-01 00:00:00");
         
             DateTime df = new DateTime(dateFrom);
             DateTime dt = new DateTime(dateTo); 
@@ -99,7 +99,7 @@ public class YoutubeStat {
     //	totalResults=total;
     //}
     
-    public static int getValue(){
+    public static int getYoutubeStat(){
     	return totalResults;
     }
     

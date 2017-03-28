@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 
 import api.ripley.Incident;
 import model.IncidentsFetcher;
+import statistics.model.personalStats.LeastCommonShape;
 import statistics.model.personalStats.MostCommonShape;
 import statistics.model.personalStats.TotalIncidents;
 import statistics.model.personalStats.YearWithMostIncidents;
@@ -20,10 +21,12 @@ public class StatsModel extends Observable implements Observer{
 	private int hoaxes;
 	private int nonUSSightings;
 	private String likeliestState;
+	private YoutubeStat ytStat;
 	
 	private YearWithMostIncidents aakashStat;
 	private MostCommonShape dimitrisStat;
 	private TotalIncidents henryStat;
+	private LeastCommonShape jayanStat;
 	
 	private int[] stateSightings;
 	
@@ -55,10 +58,14 @@ public class StatsModel extends Observable implements Observer{
 		fetcher.addObserver(this);
 		incidentList = fetcher.getIncidentsList();
 		
-		//personal statistics
+		ytStat = new YoutubeStat(fetcher);
+		
+		//initialising personal statistics classes
 		aakashStat = new YearWithMostIncidents(fetcher);
 		dimitrisStat = new MostCommonShape(fetcher);
 		henryStat = new TotalIncidents(fetcher);
+		jayanStat = new LeastCommonShape(fetcher);
+		
 	}
 
 	//updates the hoaxes statistic
@@ -70,11 +77,6 @@ public class StatsModel extends Observable implements Observer{
 				hoaxes++;
 			}
 		}
-	}
-	
-	
-	public String getHoaxes(){
-		return new Integer(hoaxes).toString();
 	}
 	
 	//updates non US sightings statistic by checking for incidents with no specified state.
@@ -89,10 +91,6 @@ public class StatsModel extends Observable implements Observer{
 				nonUSSightings++;
 			}
 		}
-	}
-	
-	public String getNonUSSightings(){
-		return new Integer(nonUSSightings).toString();
 	}
 	
 	//updates likeliestState statistic by checking for the state with the most sightings
@@ -125,11 +123,17 @@ public class StatsModel extends Observable implements Observer{
 		likeliestState = stateNames[max];
 	}
 	
+	public String getHoaxes(){
+		return new Integer(hoaxes).toString();
+	}
+	
+	public String getNonUSSightings(){
+		return new Integer(nonUSSightings).toString();
+	}
+	
 	public String getLikeliestState(){
 		return likeliestState;
 	}
-	
-	
 	
 	public String getYearWithMostIncidents(){
 		return aakashStat.getYearWithMostIncidents();
@@ -143,15 +147,25 @@ public class StatsModel extends Observable implements Observer{
 		return dimitrisStat.getShape();
 	}
 	
+	public String getLeastCommonShape(){
+		return jayanStat.getLeastCommonShape();
+	}
+	
+	public String getYoutubeStat(){
+		return new Integer(ytStat.getYoutubeStat()).toString();
+	}
+	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
+		//delays running so that incidentFetcher can get incident list.
+		//refer to IncidentFetcher.getIncidentList() for more details
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 		//gets new incident list
 		incidentList = fetcher.getIncidentsList();
-		//if incident list isn't null and the dates are valid statistics will be updated and observers notified
+		//if incident list isn't null and the dates are valid, statistics will be updated and observers notified.
 		if(incidentList != null && fetcher.isValidDates()){
 			updateStatistics();
 			updateObservers();
@@ -160,24 +174,21 @@ public class StatsModel extends Observable implements Observer{
             }});
 	}
 	
+	//updates all statistics
 	private void updateStatistics(){
 		aakashStat.updateYearWithMostIncidents();
 		dimitrisStat.updateMostCommonShape();
 		henryStat.updateTotalIncidents();
-		
+		jayanStat.updateStatistic();
 		
 		updateHoaxes();
 		updateNonUSSightings();
 		updateLikeliestState();
+		ytStat.updateYoutubeStat();
 	}
 	
 	private void updateObservers(){
 		setChanged();
 		notifyObservers();
 	}
-	
-	
-	
-	
-	// do google api stuff
 }

@@ -54,21 +54,21 @@ public class StatisticsPanel extends JPanel implements Observer {
 		titles[0] = "Hoaxes";
 		titles[1] = "Non US Sightings";
 		titles[2] = "Next Likeliest State";
-		titles[3] = "T3";
+		titles[3] = "youtbe UFO videos";
 		titles[4] = "Year with most incidents";
 		titles[5] = "Most Common UFO shape";
 		titles[6] = "Total Number Of Incidents";
-		titles[7] = "T7";
+		titles[7] = "Least Common UFO shape";
 		
 		//initialising statistics
-		stats[0] = model.getHoaxes();
-		stats[1] = model.getNonUSSightings();
-		stats[2] = model.getLikeliestState();
-		stats[3] = "S3";
-		stats[4] = model.getYearWithMostIncidents();
-		stats[5] = model.getMostCommonShape();
-		stats[6] = model.getTotalIncidents();
-		stats[7] = "S7";
+		stats[0] = "-";
+		stats[1] = "-";
+		stats[2] = "-";
+		stats[3] = "-";
+		stats[4] = "-";
+		stats[5] = "-";
+		stats[6] = "-";
+		stats[7] = "-";
 		
 		initMainPanelWidgets();
 	}
@@ -236,11 +236,11 @@ public class StatisticsPanel extends JPanel implements Observer {
 		stats[0] = model.getHoaxes();
 		stats[1] = model.getNonUSSightings();
 		stats[2] = model.getLikeliestState();
-		stats[3] = "S3";
+		stats[3] = model.getYoutubeStat();
 		stats[4] = model.getYearWithMostIncidents();
 		stats[5] = model.getMostCommonShape();
 		stats[6] = model.getTotalIncidents();
-		stats[7] = "S7";
+		stats[7] = model.getLeastCommonShape();
 		
 		
 		//changes the value of the statistic in each sub panel according to their position
