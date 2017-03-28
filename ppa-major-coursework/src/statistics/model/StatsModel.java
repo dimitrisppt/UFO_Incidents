@@ -21,6 +21,7 @@ public class StatsModel extends Observable implements Observer{
 	private int hoaxes;
 	private int nonUSSightings;
 	private String likeliestState;
+	private YoutubeStat ytStat;
 	
 	private YearWithMostIncidents aakashStat;
 	private MostCommonShape dimitrisStat;
@@ -57,11 +58,14 @@ public class StatsModel extends Observable implements Observer{
 		fetcher.addObserver(this);
 		incidentList = fetcher.getIncidentsList();
 		
+		ytStat = new YoutubeStat(fetcher);
+		
 		//initialising personal statistics classes
 		aakashStat = new YearWithMostIncidents(fetcher);
 		dimitrisStat = new MostCommonShape(fetcher);
 		henryStat = new TotalIncidents(fetcher);
 		jayanStat = new LeastCommonShape(fetcher);
+		
 	}
 
 	//updates the hoaxes statistic
@@ -147,6 +151,10 @@ public class StatsModel extends Observable implements Observer{
 		return jayanStat.getLeastCommonShape();
 	}
 	
+	public String getYoutubeStat(){
+		return new Integer(ytStat.getYoutubeStat()).toString();
+	}
+	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -176,6 +184,7 @@ public class StatsModel extends Observable implements Observer{
 		updateHoaxes();
 		updateNonUSSightings();
 		updateLikeliestState();
+		ytStat.updateYoutubeStat();
 	}
 	
 	private void updateObservers(){
