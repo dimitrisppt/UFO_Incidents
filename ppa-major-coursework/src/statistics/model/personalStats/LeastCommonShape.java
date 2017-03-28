@@ -16,11 +16,13 @@ import model.IncidentsFetcher;
  */
 public class LeastCommonShape {
 	
-	// Creation of fields.
+	// field initialisation
 	private ArrayList<Incident> incidentsList;
-	private final String[] shapes;
+	private String[] shapes;
+	private String[] shapeInstances;
 	private String statistic;
 	private Set<String> setOfShapes;
+	private IncidentsFetcher fetcher;
 	
 	/**
 	 * The constructor receives an IncidentsFetcher parameter to minimise the calls
@@ -28,13 +30,48 @@ public class LeastCommonShape {
 	 * @param fetcher
 	 */
 	public LeastCommonShape(IncidentsFetcher fetcher) {
+		this.fetcher = fetcher;
+	}
+	
 
+	
+	/**
+	 * Calculates the least common shape of Ufo incident that is reported,
+	 * with a number of incidents during the selected time period.
+	 * 
+	 * @return statistic
+	 */
+	public void updateStatistic() {
+		String shape="";
+		
 		// Initialises the incidentsList field with the contents from the fetcher object.
 		incidentsList = fetcher.getIncidentsList();	
 		shapes = new String[getHashSetSize()];
 		// Converting the set of shapes to an array.
 		setOfShapes.toArray(shapes);
 		
+		
+		int[] shapeInstances = new int[shapes.length];
+		
+		// Looping through the array of all different shapes.
+		for (int j=0; j< shapes.length; j++) {
+			// Looping through all incident reports.
+			for(int i=0; i < incidentsList.size(); i++){
+			
+				// Checks whether a shape from incidentsList matches with a shape from shapes array.
+				if (incidentsList.get(i).getShape().equals(shapes[j])) {
+					shapeInstances[j]++;
+				}
+			}
+		}
+		
+		int minIndex = 0;
+		for (int i = 0; i < shapeInstances.length; i++){
+			if (shapeInstances[i] < shapeInstances[minIndex]){
+				minIndex = i;
+			}
+		}
+		statistic = shapes[minIndex];
 	}
 	
 	
@@ -43,7 +80,7 @@ public class LeastCommonShape {
 	 * entries by converting the list to a HashSet. 
 	 * @return s.size()
 	 */
-	public int getHashSetSize(){
+	private int getHashSetSize(){
 		ArrayList<String> list = new ArrayList<String>();
 		for (int i=0; i<incidentsList.size(); i++){
 			
@@ -56,44 +93,9 @@ public class LeastCommonShape {
 		return setOfShapes.size();
 	}
 	
-
 	
-	/**
-	 * Calculates the least common shape of Ufo incident that is reported,
-	 * with a number of incidents during the selected time period.
-	 * 
-	 * @return statistic
-	 */
-	public String calculateStat() {
 	
-		int counter = 0;
-		int tempCounter = 0;
-		String tempShape="";
-		String shape="";
-		
-		// Looping through the array of all different shapes.
-		for (int j=0; j< shapes.length; j++) {
-			// Looping through all incident reports.
-			for(int i=0; i < incidentsList.size(); i++){
-			
-				// Checks whether a shape from incidentsList matches with a shape from shapes array.
-				if (incidentsList.get(i).getShape().equals(shapes[j])) {
-					tempCounter++;
-					tempShape = incidentsList.get(i).getShape();
-				}
-			}
-			if (tempCounter < counter){
-				counter = tempCounter;
-				tempCounter = 0;
-				shape = tempShape;
-				tempShape = "";
-				
-			}else{
-				tempCounter = 0;
-			}
-		}
-		statistic = "Shape: " + shape + "\n" + "Number of incidents: " + counter;
-		
+	public String getLeastCommonShape(){
 		return statistic;
 	}
 	
