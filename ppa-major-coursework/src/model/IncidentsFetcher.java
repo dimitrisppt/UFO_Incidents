@@ -114,7 +114,7 @@ public class IncidentsFetcher extends Observable{
 	
 	private void updateValidDates(){
 		if(new Integer(startDate) != null && new Integer(endDate) != null){
-			validDates = (startDate < endDate) && (startDate >=  ripley.getStartYear()) && (endDate <= ripley.getLatestYear()) ;
+			validDates = (startDate <= endDate) && (startDate >=  ripley.getStartYear()) && (endDate <= ripley.getLatestYear()) ;
 		}else{
 			validDates = false;
 		}
