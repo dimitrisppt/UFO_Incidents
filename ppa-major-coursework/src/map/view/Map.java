@@ -1,5 +1,11 @@
 package map.view;
 
+/**
+ * This class is the view part of the map and will allow the user to interact with the map 
+ * This class is the map in itself and will paint all the useful components 
+ * @ Jayen
+ */
+
 import java.awt.Graphics;
 
 import java.awt.image.BufferedImage;
@@ -17,6 +23,8 @@ import map.model.RectGroup;
 import map.model.StateGroup;
 import model.IncidentsFetcher;
 
+
+
 public class Map extends JPanel implements Observer {
 	
 	private IncidentsFetcher fetcher;
@@ -26,6 +34,13 @@ public class Map extends JPanel implements Observer {
 	private RectGroup r;
 	private boolean addedMouseListener = false;
 	
+	/**
+	 * The constructor receives an object of IncidentsFetcher and
+	 * initialises the fields.
+	 * @param fetcher
+	 * 
+	 */
+	
 	public Map(IncidentsFetcher fetcher) { //constructor for map
 		this.fetcher = fetcher;
 		fetcher.addObserver(this);
@@ -33,7 +48,11 @@ public class Map extends JPanel implements Observer {
 	
 
 
-
+	/**
+	 * This method paints the Ufos and the map and set their original positions
+	 * @param g
+	 * 
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -41,7 +60,7 @@ public class Map extends JPanel implements Observer {
 		// storing the images in the private fields 
 		try {
 			imageMap = ImageIO.read(new File("src/map/view/USAnew.png")); //image for Map *do not change*
-			imageUfo = ImageIO.read(new File("src/map/view/Ufo.png")); //image for alien/ufo
+			imageUfo = ImageIO.read(new File("src/map/view/Ufo.png")); //image for Ufo
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +94,12 @@ public class Map extends JPanel implements Observer {
 		
 	
 	}
-
+	/**
+	 * This method is the update method that updates all States and rectangles and will update where
+	 * the model is used or notifies the Observer
+	 * @param arg0
+	 * @param arg1
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) { //update all states and rectangles within their groups
 		

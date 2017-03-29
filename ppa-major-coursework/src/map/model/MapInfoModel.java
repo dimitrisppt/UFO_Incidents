@@ -140,15 +140,17 @@ public class MapInfoModel extends Observable {
 	
 
 	}
+	
 	/**
 	 * This method will return a String that will be the title of the pop up window
 	 * @return mapString
 	 */
+	
 	public String getStateName(){
 		mapString="";
 		for(int i=0 ; i < stateNames.length ; i++)
 			if(stateName.equals(stateAbreviations[i])){
-			mapString=stateAbreviations[i] +"  -  " +stateNames[i];
+			mapString = stateNames[i] + "  (" + stateAbreviations[i] +")";
 			}
 		return mapString;
 	}

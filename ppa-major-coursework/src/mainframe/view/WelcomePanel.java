@@ -1,9 +1,12 @@
 package mainframe.view;
-
-//This class will be used to Print a welcomePanel that will be part of the view 
-//This welcomePanel will print some statements , show the Ripley version and the time it took to 
-//get all the informations from the date selected . 
-//It will just aware the user of what he needs
+/**
+ * This class will be used to Print a welcomePanel that will be part of the view 
+ * This welcomePanel will print some statements , show the Ripley version and the time it took to 
+ * get all the informations from the date selected . 
+ * It will just aware the user of what he need
+ * @author Henry Valeyre
+ * 
+ */
 
 import api.ripley.Ripley;
 import model.IncidentsFetcher;
@@ -36,7 +39,14 @@ public class WelcomePanel extends JPanel implements Observer{
 	private JLabel statement;
 	private JLabel time;
 	
-	
+	/**
+	 * We here initialise the class variables
+	 * Create with our key the Ripley
+	 * call the widget method that creates everything 
+	 * And pass to the constructor an IncidentFetcher
+	 * @param incidentsFetcher it allows the class to access an IncidentFetcher
+	 * 
+	 */
 	public WelcomePanel(IncidentsFetcher incidentsFetcher){
 		
 		this.incidentsFetcher = incidentsFetcher;
@@ -47,6 +57,10 @@ public class WelcomePanel extends JPanel implements Observer{
 	//The incidentFetcher is passed to the constructor and we then call the widgets method as shown below that will create everything
 	}
 	
+	/**
+	 * This method set the layout of the class disposes all the  Labels 
+	 * and tells to the user whatever to do and calls the ripley's version
+	 */
 	private void widgets(){ 
 			
 		//We set the layout of the WelcomePanel to a GridLayout , so that every labels will be printed one under the another
@@ -83,7 +97,15 @@ public class WelcomePanel extends JPanel implements Observer{
 		
 		
 	}
-
+	/**
+	 *This updates the Labels depending on the values of the date range selected by 
+	 *the user 
+	 *it as well calls the method bellow if the date Range is correct
+	 *and then repaints the frame
+	 * @param arg   object is called
+	 * @param o   says that it is Observable by the observer
+	 * 
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		
@@ -101,18 +123,27 @@ public class WelcomePanel extends JPanel implements Observer{
 			dateLabel.setText("You only selected an start Date , please select an end Date , start Date is : " + startDate );
 		}
 		
-	
-		if (startDate!=null && endDate!=null && !startDate.equals("0") && !endDate.equals("0")){
+		if (startDate!=null && endDate!=null && !startDate.equals("0") 
+				&& !endDate.equals("0")){
 			//If the endDate andStart date are selected but the Date are not valid , then the dateLabel will aware the user of an invalid Date range selection
-			if(incidentsFetcher.isValidDates() == false){
-				dateLabel.setText("You selected an invalide Date range");
-			}else{
-				//if everything is correct , then it will print the selected Dates 
-				dateLabel.setText("Date range selected :" + startDate + " - " + endDate);
-				//Say that it is grabbing gata 
-				dataGrabbing.setText("Grabbing data ... , ");
-				//And call the checkDates method defined below
-				checkDates();
+			if((incidentsFetcher.getEndDate())-(incidentsFetcher.getStartDate())>30){
+				time.setText("You selected a range too big (of more than 30)");
+				if(incidentsFetcher.isValidDates() == false){
+					dateLabel.setText("You selected an invalide Date range");
+				}
+			}
+			if((incidentsFetcher.getEndDate())-(incidentsFetcher.getStartDate())<=30){
+				if(incidentsFetcher.isValidDates() == false){
+					dateLabel.setText("You selected an invalide Date range");
+				}else{
+					//if everything is correct , then it will print the selected Dates 
+					dateLabel.setText("Date range selected :" + startDate + " - " + endDate);
+					//Say that it is grabbing gata 
+					dataGrabbing.setText("Grabbing data ... , ");
+					//And call the checkDates method defined below
+					checkDates();
+				
+				}
 			
 			}
 		}
@@ -121,6 +152,14 @@ public class WelcomePanel extends JPanel implements Observer{
 		
 	}
 	
+	/**
+	 * This class will be used to Print a welcomePanel that will be part of the view 
+	 * This welcomePanel will print some statements , show the Ripley version and the time it took to 
+	 * get all the informations from the date selected . 
+	 * It will just aware the user of what he need
+	 * 
+	 * 
+	 */
 	public void checkDates(){
 		//We then tell the code with a thread that this should be called later on 
 		SwingUtilities.invokeLater(new Runnable() {

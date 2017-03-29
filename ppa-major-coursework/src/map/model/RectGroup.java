@@ -1,7 +1,12 @@
 package map.model;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-
+/**
+ * This class is made to implement the Rectangles that represent the states and 
+ * display them on the map
+ * @author Jayen
+ * 
+ */
 public class RectGroup extends ArrayList<Rectangle> {
 	StateGroup s;//group of states
 	private int rectSizex;//x size of rectangle
@@ -59,7 +64,14 @@ public class RectGroup extends ArrayList<Rectangle> {
 	private Rectangle HI;//50
 	private int w; //width of frame
 	private int h;//height of frame
-
+	/**
+	 * the constructor get passes a width and a height and a StateGroup 
+	 * the constructor initialises the class variables
+	 * @param s
+	 * @param w
+	 * @param h
+	 * 
+	 */
 	public RectGroup(StateGroup s, int w, int h){
 		this.s = s;
 		this.rectSizex = 25;
