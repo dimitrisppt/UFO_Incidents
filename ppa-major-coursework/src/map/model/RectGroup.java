@@ -3,69 +3,67 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class RectGroup extends ArrayList<Rectangle> {
-	StateGroup s;
-	int rectSizex;
-	int rectSizey;
+	StateGroup s;//group of states
+	private int rectSizex;//x size of rectangle
+	private int rectSizey;//y size of rectangle
 	
-	Rectangle WA;
-	Rectangle OR; //create all Rectangles and input coordinates
-	Rectangle ID;
-	Rectangle MT;
-	Rectangle WY; 
-	Rectangle ND; 
-	Rectangle SD;
-	Rectangle NE; 
-	Rectangle MN; 
-	Rectangle IA;//10
-	Rectangle WI; 
-	Rectangle MI; 
-	Rectangle NY; 
-	Rectangle VT; 
-	Rectangle MA;
-	Rectangle NH;
-	Rectangle ME;
-	Rectangle IL; 
-	Rectangle IN;
-	Rectangle OH;//20
-	Rectangle PA;
-	Rectangle NJ; 
-	Rectangle CT;
-	Rectangle RI; 
-	Rectangle CA;
-	Rectangle NV;
-	Rectangle UT; 
-	Rectangle AZ;
-	Rectangle CO;
-	Rectangle NM; //30 
-	Rectangle KS; 
-	Rectangle OK; 
-	Rectangle TX;
-	Rectangle MO; 
-	Rectangle AR; 
-	Rectangle LA; 
-	Rectangle KY; 
-	Rectangle TN; 
-	Rectangle MS; 
-	Rectangle AL; //40
-	Rectangle GA; 
-	Rectangle SC;
-	Rectangle NC;
-	Rectangle VA;
-	Rectangle WV;
-	Rectangle DE; 
-	Rectangle MD; 
-	Rectangle FL; 
-	Rectangle AK;
-	Rectangle HI;//50
-	int w;
-	int h;
+	private Rectangle WA;
+	private Rectangle OR; //create all Rectangles and input coordinates
+	private Rectangle ID;
+	private Rectangle MT;
+	private Rectangle WY; 
+	private Rectangle ND; 
+	private Rectangle SD;
+	private Rectangle NE; 
+	private Rectangle MN; 
+	private Rectangle IA;//10
+	private Rectangle WI; 
+	private Rectangle MI; 
+	private Rectangle NY; 
+	private Rectangle VT; 
+	private Rectangle MA;
+	private Rectangle NH;
+	private Rectangle ME;
+	private Rectangle IL; 
+	private Rectangle IN;
+	private Rectangle OH;//20
+	private Rectangle PA;
+	private Rectangle NJ; 
+	private Rectangle CT;
+	private Rectangle RI; 
+	private Rectangle CA;
+	private Rectangle NV;
+	private Rectangle UT; 
+	private Rectangle AZ;
+	private Rectangle CO;
+	private Rectangle NM; //30 
+	private Rectangle KS; 
+	private Rectangle OK; 
+	private Rectangle TX;
+	private Rectangle MO; 
+	private Rectangle AR; 
+	private Rectangle LA; 
+	private Rectangle KY; 
+	private Rectangle TN; 
+	private Rectangle MS; 
+	private Rectangle AL; //40
+	private Rectangle GA; 
+	private Rectangle SC;
+	private Rectangle NC;
+	private Rectangle VA;
+	private Rectangle WV;
+	private Rectangle DE; 
+	private Rectangle MD; 
+	private Rectangle FL; 
+	private Rectangle AK;
+	private Rectangle HI;//50
+	private int w; //width of frame
+	private int h;//height of frame
 
 	public RectGroup(StateGroup s, int w, int h){
 		this.s = s;
 		this.rectSizex = 25;
 		this.rectSizey = 25;
-		
-		//50
 		
 		
 		Rectangle WA = new Rectangle(w * 200/2000,h * 125/1236, rectSizex, rectSizey); //list of Rectangles
@@ -168,6 +166,6 @@ public class RectGroup extends ArrayList<Rectangle> {
 		this.add(MD);
 		this.add(FL);
 		this.add(AK);
-		this.add(HI);
+		this.add(HI);//50
 	}
 }

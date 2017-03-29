@@ -7,7 +7,7 @@ import model.IncidentsFetcher;
 public class StateGroup extends ArrayList<State>{ //a list of states
 	
 	private IncidentsFetcher fetcher;
-	private State WA; //list of states
+	private State WA; //Represents all the states
 	private State OR; //create all states and input coordinates
 	private State ID;
 	private State MT;
@@ -60,18 +60,18 @@ public class StateGroup extends ArrayList<State>{ //a list of states
 	
 	private int minSightings = 1000; //minimum number of sightings out of all states
 	
-	private void updateSightings(){
-		int minSightings = 0;
-		for (int i = 0;i < this.size(); i++){
-			if(this.get(i).getSightings() < minSightings){
-				minSightings = this.get(i).getSightings();
+	private void updateSightings(){//find the state with the least sightings
+		int minSightings = 0;//initialise minsightings to 0
+		for (int i = 0;i < this.size(); i++){//from 0 to the size of the arraylist
+			if(this.get(i).getSightings() < minSightings){//if a state has fewer sightings
+				minSightings = this.get(i).getSightings();//min sightings will always be smallest number
 			}
 		}
 	}
 	
 	public StateGroup(IncidentsFetcher fetcher){	//add states to list
 		this.fetcher = fetcher;
-		updateSightings();
+		updateSightings();//updates the minimum number of sightings out of all states
 		
 		WA = new State(200, 125, "WA", fetcher, minSightings); //list of states
 		OR = new State(150, 250, "OR", fetcher, minSightings); //create all states and input coordinates
