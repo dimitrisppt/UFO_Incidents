@@ -41,7 +41,7 @@ public class MapInfoWindow extends JFrame implements Observer{
 	 */
 	public MapInfoWindow(MapInfoModel infoModel) {
 		
-		super("List of Incidents");
+		super(infoModel.getStateName());
 		ImageIcon img = new ImageIcon("src/game/view/Ufo5.png");
 		// Sets the icon of the frame to a UFO image.
 		this.setIconImage(img.getImage());
@@ -101,6 +101,7 @@ public class MapInfoWindow extends JFrame implements Observer{
 	public void update(Observable o, Object arg) {
 		
 		if (infoModel.getDoubleClick()) {
+			
 			int index = jlInfo.getSelectedIndex();
 			// Shows a dialog message with the detailed report of that incident.
 			infoModel.showSpecificInfo(index);
