@@ -1,8 +1,12 @@
 package statistics.model;
 
+/**
+ * This class is used to print the amount of videos that exist on youtube between the dates selected .
+ *It will as well show only videos , videos that are related to the key "Ufo Sightings"
+ *
+ *@author Henry Valeyre
+ */
 
-//This class is used to print the amount of videos that exist on youtube between the dates selected .
-//It will as well show only videos , videos that are related to the key "Ufo Sightings"
 
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -34,12 +38,19 @@ public class YoutubeStat {
     //We then create an object of the IncidentFetcher that will be used to obtain the user's dateRange selection
     private static IncidentsFetcher incidents;
 	
+    /**
+     * This constructor initialises all the class variables
+     * @param incidents   this class get passed an object of the IncidentFetcher
+     */
     public YoutubeStat(IncidentsFetcher incidents){
     	this.incidents=incidents;
     	//We then created a constructor and pass it the object of the IncidentFetcher and initialise the class variable
     }
-    
-    //We then create a method that will modify the value of the totalResults variable
+
+    /**
+     *We then create a method that will modify the value of the totalResults variable
+     *
+     */
     public void updateYoutubeStat(){
     	// Read the developer key from the properties file.
         Properties properties = new Properties();
@@ -108,7 +119,11 @@ public class YoutubeStat {
             t.printStackTrace();
         }    
     }
-    //Get method to return all the values 
+    /**
+     * Get method to return all the values 
+     * @return totalResults  this returns the totalResult of values for the Youtube
+     * videos for the query "Ufo Sightings"
+     */
     public static int getYoutubeStat(){
     	return totalResults;
     }

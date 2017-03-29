@@ -2,7 +2,11 @@ package map.model;
 
 import api.ripley.Incident;
 import model.IncidentsFetcher;
-
+/**
+ * this class will set the value and size of each ufo
+ * @author Jayen
+ * 
+ */
 public class State { //class to represent each state
 
 	private int xCoord; //x coordinate for Ufo icon
@@ -13,6 +17,20 @@ public class State { //class to represent each state
 	private String name;//name of state
 	private IncidentsFetcher fetcher;//incidents fetcher
 	private double multiplier;//multiplier used for number of sightings
+	
+	/**
+	 * the constructor receives the x and y coordinates
+	 * it receives a fetcher 
+	 * and a minimum Sightings
+	 * it will initialise the class variables
+	 * and will set the value and size of each ufo
+	 * @param xCoord
+	 * @param yCoord
+	 * @param name
+	 * @param fetcher
+	 * @param minSightings
+	 * 
+	 */
 	
 	public State(int xCoord, int yCoord, String name, IncidentsFetcher fetcher, int minSightings){ //state constructor
 		this.xCoord = xCoord;//x coordinate of State
@@ -49,24 +67,45 @@ public class State { //class to represent each state
 		}
 	}
 
-	
+	/**
+	 * method to get the sightings
+	 * @return sightingsReturned
+	 * 
+	 */
 	public int getSightings(){ //return number of sightings
 		return sightingsReturned;
 	}
 	
+	/**
+	 * method to get the x coordinates
+	 * @return xCoord
+	 * 
+	 */
 	public int getX(){ //return x coordinates
 		return xCoord;
 	}
-	
+	/**
+	 * method to get the y coordinates
+	 * @return yCoord
+	 * 
+	 */
 	public int getY(){ //return y coordinates
 		return yCoord;
 	}
-	
-	public String getName(){ //return x coordinates
+	/**
+	 * method to get the name
+	 * @return name
+	 * 
+	 */
+	public String getName(){ //return the name
 		return name;
 	}
 	
-	
+	/**
+	 * method to update when the model is updated it will go through the state
+	 * and increase the sightings
+	 * 
+	 */
 	private void updateSightings(){ //update sightings for each state
 		sightings = 0;
 		for (Incident incident: fetcher.getIncidentsList()){
