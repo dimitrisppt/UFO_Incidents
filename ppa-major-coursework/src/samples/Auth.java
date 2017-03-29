@@ -1,4 +1,4 @@
-package com.google.api.services.samples.youtube.cmdline;
+package samples;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.StoredCredential;

@@ -7,12 +7,12 @@ package statistics.model;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.util.DateTime;
-import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.PageInfo;
 import com.google.api.services.youtube.model.SearchListResponse;
 
 import model.IncidentsFetcher;
+import samples.Auth;
 
 import java.io.IOException;
 import java.io.InputStream;
