@@ -1,6 +1,7 @@
 package statistics.model;
 
 import java.util.ArrayList;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,6 +14,16 @@ import statistics.model.personalStats.MostCommonShape;
 import statistics.model.personalStats.TotalIncidents;
 import statistics.model.personalStats.YearWithMostIncidents;
 
+
+/**
+ * Statistics model. Observes an incident fetcher and gets an incident list from it. 
+ * It uses this incident list to get relevant statistics. 
+ * Additionally gets personal statistics from each personal statistic class.
+ * on update it gets the incident list again and updates all statistics
+ * 
+ * @author Aakash
+ *
+ */
 public class StatsModel extends Observable implements Observer{
 
 	private IncidentsFetcher fetcher;
@@ -50,7 +61,10 @@ public class StatsModel extends Observable implements Observer{
 	
 	
 	
-	//Constructor
+	/**
+	 * Constructor
+	 * @param Incident Fetcher
+	 */
 	public StatsModel(IncidentsFetcher iFetcher) {
 		//initialising variables
 		stateSightings = new int[stateAbbreviations.length];
@@ -68,19 +82,26 @@ public class StatsModel extends Observable implements Observer{
 		
 	}
 
-	//updates the hoaxes statistic
+	/**
+	 * updates the hoaxes statistic
+	 */
 	private void updateHoaxes(){
+		//resets hoaxes
 		hoaxes = 0;
+		//for each incident, checks if the summary contains the string "hoax" without case sensitivity
 		for (Incident incident : incidentList){
 			String lowerCaseSummary = incident.getSummary().toLowerCase();
 			if (lowerCaseSummary.contains("hoax")){
+				//increments hoaxes if string "hoax" is found in summary
 				hoaxes++;
 			}
 		}
 	}
 	
-	//updates non US sightings statistic by checking for incidents with no specified state.
-	//incidents inside the U.S without a specified state will be counted towards non U.S sightings.
+	/**
+	 * Updates non US sightings statistic by checking for incidents with no specified state.
+	 * Incidents inside the U.S, but without a specified state will be counted towards non U.S sightings.
+	 */
 	private void updateNonUSSightings(){
 		//resets nonUSSightings
 		nonUSSightings = 0;
@@ -93,14 +114,16 @@ public class StatsModel extends Observable implements Observer{
 		}
 	}
 	
-	//updates likeliestState statistic by checking for the state with the most sightings
+	/**
+	 * updates likeliestState statistic by checking for the state with the most sightings
+	 */
 	private void updateLikeliestState(){
 		//resets vales for state sightings
 		for (int i = 0; i < stateSightings.length; i++){
 			stateSightings[i] = 0;
 		}
 		
-		//for each sighting's state it it goes through each stateAbbrevation to check for a match
+		//for each incident's state, it goes through each element in stateAbbrevation to check for a match
 		for (Incident incident : incidentList){
 			String incidentState = incident.getState();
 			for (int i = 0; i < stateSightings.length; i++){
@@ -111,51 +134,88 @@ public class StatsModel extends Observable implements Observer{
 			}
 		}
 		
-		//after the sightings array is updated above looks for the index with the maximum value
+		//after the sightings array is updated above, look for the index with the maximum value
 		int max = 0;
 		for (int i = 0; i<stateSightings.length; i++){
 			if(stateSightings[i] > stateSightings[max]){
 				max = i;
 			}
 		}
-		//indices in stateSightings corresponds indices in stateSightings 
+		//indices in stateSightings corresponds indices in stateNames 
 		//so we can use the same index to find the name of the state
 		likeliestState = stateNames[max];
 	}
 	
+	/**
+	 * getter method for hoaxes
+	 * @return hoaxes
+	 */
 	public String getHoaxes(){
 		return new Integer(hoaxes).toString();
 	}
 	
+	/**
+	 * getter method for non US Sightings
+	 * @return
+	 */
 	public String getNonUSSightings(){
 		return new Integer(nonUSSightings).toString();
 	}
 	
+	/**
+	 * getter method for next likeliest state
+	 * @return likeliestState
+	 */
 	public String getLikeliestState(){
 		return likeliestState;
 	}
 	
+	/**
+	 * getter method for year with most incidents
+	 * @return yearWithMostIncidents
+	 */
 	public String getYearWithMostIncidents(){
 		return aakashStat.getYearWithMostIncidents();
 	}
 	
+	/**
+	 * getter method for total incidents
+	 * @return totalIncidents
+	 */
 	public String getTotalIncidents(){
 		return henryStat.getTotalIncidents();
 	}
 	
+	/**
+	 * getter method for most common shape
+	 * @return mostCommonShape
+	 */
 	public String getMostCommonShape(){
 		return dimitrisStat.getShape();
 	}
 	
+	/**
+	 * getter method for least common shape
+	 * @return leastCommonShape
+	 */
 	public String getLeastCommonShape(){
 		return jayanStat.getLeastCommonShape();
 	}
 	
+	/**
+	 * getter method for youtube videos of UFOs during selected date range
+	 * @return youtubeStat
+	 */
 	public String getYoutubeStat(){
 		return new Integer(ytStat.getYoutubeStat()).toString();
 	}
 	
 	
+	/**
+	 * Update method
+	 * when the observed incident fetcher updates, 
+	 * gets the updated incident list and updated all the statistics
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
@@ -174,7 +234,9 @@ public class StatsModel extends Observable implements Observer{
             }});
 	}
 	
-	//updates all statistics
+	/**
+	 * updates all statistics
+	 */
 	private void updateStatistics(){
 		aakashStat.updateYearWithMostIncidents();
 		dimitrisStat.updateMostCommonShape();
@@ -187,6 +249,9 @@ public class StatsModel extends Observable implements Observer{
 		ytStat.updateYoutubeStat();
 	}
 	
+	/**
+	 * updates all observers
+	 */
 	private void updateObservers(){
 		setChanged();
 		notifyObservers();
