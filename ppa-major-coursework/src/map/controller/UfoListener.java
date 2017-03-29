@@ -10,8 +10,8 @@ import map.view.MapInfoWindow;
 import model.IncidentsFetcher;
 
 public class UfoListener implements MouseListener {
-	private RectGroup r;
-	private StateGroup s;
+	private RectGroup r; //rectangle group
+	private StateGroup s;//state group
 	private MapInfoWindow mapWindow;
 	private IncidentsFetcher fetcher;
 	
@@ -23,22 +23,23 @@ public class UfoListener implements MouseListener {
 	
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		Point mousePoint = e.getPoint();
-		int x = e.getX();
-		int y = e.getY();
+	public void mouseClicked(MouseEvent e) { //when mouse is clicked
+		Point mousePoint = e.getPoint();//specific point of mouse at time of event 
+		int x = e.getX();//mouse point x
+		int y = e.getY();//mouse point y
 		System.out.println(x);
 		System.out.println(y);
 		
 		for (int i = 0; i < r.size(); i++) {
-			if (r.get(i).contains(x,y)) {
+			if (r.get(i).contains(x,y)) {//if mouse pointer was in rectangle area of any state
 				
-				mapWindow = new MapInfoWindow(new MapInfoModel(fetcher, s.get(i).getName())); //print name of state clicked
+				mapWindow = new MapInfoWindow(new MapInfoModel(fetcher, s.get(i).getName()));//gets info of state clicked //print name of state clicked
 				
 			}
 		}
 	}
 
+	//methods to implement the mouse click when the class is called
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
