@@ -128,7 +128,7 @@ public class WelcomePanel extends JPanel implements Observer{
             	//We then print the time it took to grab the data 
             	time.setText(incidentsFetcher.getFetchTime());
             	//We then tell the user that he can now interact with the data 
-            	statement.setText("\u001BPlease now interact with this data using the buttons to the left and the right");
+            	statement.setText("Please now interact with this data using the buttons to the left and the right");
             }
         });
 	}
