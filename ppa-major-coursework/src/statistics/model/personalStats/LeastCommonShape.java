@@ -68,10 +68,10 @@ public class LeastCommonShape {
 		int minIndex = 0;
 		for (int i = 0; i < shapeInstances.length; i++){
 			if (shapeInstances[i] < shapeInstances[minIndex]){
+				statistic = shapes[i];
 				minIndex = i;
 			}
 		}
-		statistic = shapes[minIndex];
 	}
 	
 	
