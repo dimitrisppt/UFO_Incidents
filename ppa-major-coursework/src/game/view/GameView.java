@@ -11,16 +11,17 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+
 import game.controller.BaseballBatButtonListener;
 import game.controller.CatapultButtonListener;
 import game.controller.FistButtonListener;
 import game.controller.GolfClubButtonListener;
+import game.controller.InfoButtonListener;
 import game.controller.KatanaButtonListener;
 import game.controller.LightsaberButtonListener;
 import game.controller.NuclearBombButtonListener;
@@ -62,6 +63,7 @@ public class GameView extends JPanel implements Observer{
 	private JLabel jlUfo;
 	private JProgressBar progressBar;
 	private JLabel jlUfoCharacter;
+	private JButton infoButton;
 	
 	public GameView() throws IOException {
 		
@@ -87,13 +89,16 @@ public class GameView extends JPanel implements Observer{
 		
 		JPanel jpDisplay = new JPanel(new BorderLayout());
 		JPanel jpEast = new JPanel(new BorderLayout());
-		JPanel jpEastStore = new JPanel(new GridLayout(11,1));
+		JPanel jpEastStore = new JPanel(new GridLayout(12,1));
 		JPanel jpCenter = new JPanel(new BorderLayout());
 		JPanel jpCenterNorth = new JPanel(new BorderLayout());
 		JPanel jpWest = new JPanel(new BorderLayout());
-		JPanel jpWestInfo = new JPanel(new GridLayout(11,1));
+		JPanel jpWestInfo = new JPanel(new GridLayout(12,1));
 		JPanel jpCenterCenterNorth = new JPanel();
 		JPanel jpCenterCenter = new JPanel(new BorderLayout());
+		JPanel jpSouth = new JPanel(new BorderLayout());
+		JPanel jpSouthEast = new JPanel(new BorderLayout());
+		
 		jpEast.setOpaque(false);
 		jpEastStore.setOpaque(false);
 		jpCenter.setOpaque(false);
@@ -244,9 +249,12 @@ public class GameView extends JPanel implements Observer{
 		jlUfoCharacter.setHorizontalAlignment(JLabel.CENTER);
 		jlUfoCharacter.addMouseListener(new GameUfoListener(clickObsv, gameModel));
 		
-	
+		
+		infoButton = new JButton("Help");
+		infoButton.addActionListener(new InfoButtonListener());
 		
 		
+		jpEastStore.add(new JLabel(""));
 		jpEastStore.add(jlStore);
 		jpEastStore.add(jbStoreItem1);
 		jpEastStore.add(jbStoreItem2);
@@ -259,7 +267,12 @@ public class GameView extends JPanel implements Observer{
 		jpEastStore.add(jbStoreItem9);
 		jpEastStore.add(jbStoreItem10);
 		
+		jpSouthEast.add(infoButton, BorderLayout.WEST);
+		jpSouthEast.setOpaque(false);
+		jpSouth.add(jpSouthEast, BorderLayout.NORTH);
+		jpSouth.setOpaque(false);
 		
+		jpWestInfo.add(jpSouth);
 		jpWestInfo.add(jlInfo);
 		jpWestInfo.add(jlInfoItem1);
 		jpWestInfo.add(jlInfoItem2);
@@ -280,6 +293,9 @@ public class GameView extends JPanel implements Observer{
 		jpCenterCenter.add(jpCenterCenterNorth, BorderLayout.NORTH);
 		jpCenterCenter.add(jlUfoCharacter, BorderLayout.CENTER);
 		jpCenter.add(jpCenterCenter, BorderLayout.CENTER);
+		
+		
+		
 		jpWest.add(jpWestInfo);
 		
 		
@@ -437,12 +453,7 @@ public class GameView extends JPanel implements Observer{
 			jbStoreItem10.setEnabled(false);
 		}
 		
-	
-		
-		
-		
-		
-		
+
 	}
 	
 }
