@@ -3,7 +3,12 @@ import java.util.ArrayList;
 
 import api.ripley.Incident;
 import model.IncidentsFetcher;
-
+/**
+ * This class is part of the model , it positions the states throughout the map
+ * 
+ * @author Jayen
+ * 
+ */
 public class StateGroup extends ArrayList<State>{ //a list of states
 	
 	private IncidentsFetcher fetcher;
@@ -59,7 +64,10 @@ public class StateGroup extends ArrayList<State>{ //a list of states
 	private State HI;//50
 	
 	private int minSightings = 1000; //minimum number of sightings out of all states
-	
+	/**
+	 * method that will update the States'Sightings
+	 * 
+	 */
 	private void updateSightings(){//find the state with the least sightings
 		int minSightings = 0;//initialise minsightings to 0
 		for (int i = 0;i < this.size(); i++){//from 0 to the size of the arraylist
@@ -68,7 +76,12 @@ public class StateGroup extends ArrayList<State>{ //a list of states
 			}
 		}
 	}
-	
+	/**
+	 * constructor that get passes an IncidentFetcher
+	 * initialises the class variables Position them and add them 
+	 * @param fetcher
+	 * 
+	 */
 	public StateGroup(IncidentsFetcher fetcher){	//add states to list
 		this.fetcher = fetcher;
 		updateSightings();//updates the minimum number of sightings out of all states
