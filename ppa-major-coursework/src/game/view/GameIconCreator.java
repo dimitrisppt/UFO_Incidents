@@ -9,7 +9,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class StoreItems {
+import game.model.GameModel;
+
+public class GameIconCreator {
 
 	private BufferedImage imageFist;
 	private BufferedImage imageRock;
@@ -33,9 +35,12 @@ public class StoreItems {
 	private int attack;
 	private BufferedImage image;
 	private int price;
+	private GameModel gameModel;
+	private BufferedImage[] arrayOfUfoIcons;
+	private int ufoIndex;
+	private boolean changedIcon;
 	
-	
-	public StoreItems() throws IOException {
+	public GameIconCreator(GameModel gameModel) throws IOException {
 		
 		imageFist = ImageIO.read(new File("src/game/view/fist.png"));
 		imageRock = ImageIO.read(new File("src/game/view/rock.png"));
@@ -56,6 +61,18 @@ public class StoreItems {
 		ufo6 = ImageIO.read(new File("src/game/view/Ufo6.png"));
 		ufo7 = ImageIO.read(new File("src/game/view/Ufo7.png"));
 		ufo8 = ImageIO.read(new File("src/game/view/Ufo8.png"));
+		
+		this.gameModel = gameModel;
+		arrayOfUfoIcons = new BufferedImage[8];
+		arrayOfUfoIcons[0] = ufo1;
+		arrayOfUfoIcons[1] = ufo2;
+		arrayOfUfoIcons[2] = ufo3;
+		arrayOfUfoIcons[3] = ufo4;
+		arrayOfUfoIcons[4] = ufo5;
+		arrayOfUfoIcons[5] = ufo6;
+		arrayOfUfoIcons[6] = ufo7;
+		arrayOfUfoIcons[7] = ufo8;
+		changedIcon = false;
 		
 		
 	}
@@ -145,6 +162,17 @@ public class StoreItems {
 		return ufo8;
 	}
 
+	public BufferedImage changeUfoIcon(){
+		if (gameModel.getUfoLevel() % 10 == 0){
+			if(!changedIcon){
+				ufoIndex = (ufoIndex+1)%8;
+				changedIcon = true;
+			}
+		}else{
+			changedIcon = false;
+		}
+		return arrayOfUfoIcons[ufoIndex];
+	}
 	
 
 }
