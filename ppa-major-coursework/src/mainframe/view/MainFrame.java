@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,6 +30,7 @@ import controller.MainActionListener;
 import controller.MainComboBoxListener;
 import controller.WelcomeListenerFrom;
 import controller.WelcomeListenerTo;
+import game.view.GameView;
 import map.view.Map;
 import model.IncidentsFetcher;
 import statistics.view.StatisticsPanel;
@@ -62,22 +64,25 @@ public class MainFrame extends JFrame implements Observer {
 	private JPanel jpDates;
 	private JLabel background;
 	private JPanel jpCenter;
-	private JPanel centerCard;
-	private JPanel rightCard;
+	private JPanel welcomeCard;
+	private JPanel statisticsCard;
 	private JLabel leftLabel;
-	private JPanel leftCard;
+	private JPanel mapCard;
+	private JPanel gameCard;
 	private WelcomePanel welcomePanel;
 	private IncidentsFetcher incidentsFetcher;
 	private StatisticsPanel statsPanel;
 	private Map mapPanel;
+	private GameView gamePanel;
 	
 	
 	/**
 	 * The constructor initialises all panels.
 	 * Creates a Ripley object with authentication keys.
 	 * Initialises all the widgets.
+	 * @throws IOException 
 	 */
-	public MainFrame() {
+	public MainFrame() throws IOException {
 		
 		super("UFO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,6 +97,7 @@ public class MainFrame extends JFrame implements Observer {
 		statsPanel = new StatisticsPanel(incidentsFetcher);
 		welcomePanel = new WelcomePanel(incidentsFetcher);
 		mapPanel = new Map(incidentsFetcher);
+		gamePanel = new GameView();
 		
 		initWidgets();
 	}
@@ -130,30 +136,34 @@ public class MainFrame extends JFrame implements Observer {
 	public JPanel setPanels(JLabel label) {
 		
 		// Sets the first card to the welcome panel.
-		centerCard = welcomePanel;
+		welcomeCard = welcomePanel;
 		// Makes the card transparent.
-		centerCard.setOpaque(false);
+		welcomeCard.setOpaque(false);
 
 		// Sets the second card to the statistics panel
-        rightCard = statsPanel;
+        statisticsCard = statsPanel;
         // Makes the card transparent.
-        rightCard.setOpaque(false);
+        statisticsCard.setOpaque(false);
         statsPanel.setForeground(Color.white);
        
         
-        leftCard = mapPanel;
+        mapCard = mapPanel;
 //        leftCard.setOpaque(false);
 //        leftLabel = new JLabel("LEFT");
 //        leftLabel.setForeground(Color.white);
 //        leftLabel.setOpaque(false);
 //        leftCard.add(leftLabel);
+        gameCard = gamePanel;
+        gameCard.setOpaque(false);
+        
         
         // Creates a JPanel of cards with CardLayout.
         cards = new JPanel(new CardLayout());
         cards.setOpaque(false);
-        cards.add(centerCard, "Center");
-        cards.add(rightCard, "Right");
-        cards.add(leftCard, "Left");
+        cards.add(welcomeCard);
+        cards.add(statisticsCard);
+        cards.add(mapCard);
+        cards.add(gameCard);
         
         getContentPane().add(cards);
         

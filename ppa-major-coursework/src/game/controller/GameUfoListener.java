@@ -5,23 +5,24 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 
 import game.model.ClickModel;
+import game.model.GameModel;
 
 
-public class UfoListener  implements MouseListener {
+public class GameUfoListener  implements MouseListener {
 	
 	private ClickModel clickObsv;
-
-	public UfoListener(ClickModel clickObsv)
+	private GameModel gameModel;
+	public GameUfoListener(ClickModel clickObsv, GameModel gameModel)
 	{
 		this.clickObsv = clickObsv;
+		this.gameModel = gameModel;
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		JLabel label = (JLabel)arg0.getSource();
 		
 			clickObsv.singleClicked();
-			System.out.println("print ok");
-		
+			gameModel.hitUFO();
 	}
 
 	@Override
