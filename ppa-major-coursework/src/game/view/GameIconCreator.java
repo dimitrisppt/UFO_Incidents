@@ -15,6 +15,7 @@ import game.model.GameModel;
  */
 public class GameIconCreator {
 
+
 	// Declaring fields that will hold images.
 	private BufferedImage imageFist;
 	private BufferedImage imageRock;
@@ -34,7 +35,7 @@ public class GameIconCreator {
 	private BufferedImage ufo6;
 	private BufferedImage ufo7;
 	private BufferedImage ufo8;
-	private BufferedImage image;
+	
 	// Declaring array of Ufo Icons
 	private BufferedImage[] arrayOfUfoIcons;
 	// Declaring other fields.
@@ -47,6 +48,7 @@ public class GameIconCreator {
 	/**
 	 * The constructor receives a parameter of type GameModel,
 	 * initialises all fields with images and adds the ufo images to an array.
+	 * 
 	 * @param gameModel
 	 * @throws IOException
 	 */
@@ -75,9 +77,9 @@ public class GameIconCreator {
 		ufo8 = ImageIO.read(new File("src/game/view/Ufo8.png"));
 		
 		this.gameModel = gameModel;
+
 		// Creates a new array of BufferedImages with 8 positions.
 		arrayOfUfoIcons = new BufferedImage[8];
-		// Ini
 		arrayOfUfoIcons[0] = ufo1;
 		arrayOfUfoIcons[1] = ufo2;
 		arrayOfUfoIcons[2] = ufo3;
@@ -88,94 +90,154 @@ public class GameIconCreator {
 		arrayOfUfoIcons[7] = ufo8;
 		changedIcon = false;
 		
-		
 	}
 	
+	/**
+	 * @return attack
+	 */
 	public int getItemAttackValue() {
 		return attack;
 	}
 	
+	/**
+	 * @return price
+	 */
 	public int getItemPrice() {
 		return price;
 	}
 	
-	public BufferedImage getItemImage() {
-		return image;
-	}
-	
-	
+	/**
+	 * @return imageFist
+	 */
 	public BufferedImage getImageFist() {
 		return imageFist;
 	}
 
+	/**
+	 * @return imageRock
+	 */
 	public BufferedImage getImageRock() {
 		return imageRock;
 	}
 
+	/**
+	 * @return imageSlingshot
+	 */
 	public BufferedImage getImageSlingshot() {
 		return imageSlingshot;
 	}
 
+	/**
+	 * @return imageBaseballBat
+	 */
 	public BufferedImage getImageBaseballBat() {
 		return imageBaseballBat;
 	}
 
+	/**
+	 * @return imageGolfClub
+	 */
 	public BufferedImage getImageGolfClub() {
 		return imageGolfClub;
 	}
 
+	/**
+	 * @return imageKatana
+	 */
 	public BufferedImage getImageKatana() {
 		return imageKatana;
 	}
 
+	/**
+	 * @return imageLightsaber
+	 */
 	public BufferedImage getImageLightsaber() {
 		return imageLightsaber;
 	}
 
+	/**
+	 * @return imageCatapult
+	 */
 	public BufferedImage getImageCatapult() {
 		return imageCatapult;
 	}
 
+	/**
+	 * @return imageTnt
+	 */
 	public BufferedImage getImageTnt() {
 		return imageTnt;
 	}
-
+	
+	/**
+	 * @return imageNuclearBomb
+	 */
 	public BufferedImage getImageNuclearBomb() {
 		return imageNuclearBomb;
 	}
 	
+	/**
+	 * @return ufo1
+	 */
 	public BufferedImage getImageUfo1() {
 		return ufo1;
 	}
 
-
+	/**
+	 * @return ufo2
+	 */
 	public BufferedImage getImageUfo2() {
 		return ufo2;
 	}
 
+	/**
+	 * @return ufo3
+	 */
 	public BufferedImage getImageUfo3() {
 		return ufo3;
 	}
 
+	/**
+	 * @return ufo4
+	 */
 	public BufferedImage getImageUfo4() {
 		return ufo4;
 	}
+	
+	/**
+	 * @return ufo5
+	 */
 	public BufferedImage getImageUfo5() {
 		return ufo5;
 	}
 
+	/**
+	 * @return ufo6
+	 */
 	public BufferedImage getImageUfo6() {
 		return ufo6;
 	}
 
+	/**
+	 * @return ufo7
+	 */
 	public BufferedImage getImageUfo7() {
 		return ufo7;
 	}
 
+	/**
+	 * @return ufo8
+	 */
 	public BufferedImage getImageUfo8() {
 		return ufo8;
 	}
 
+	/**
+	 * Changes the ufo icon with the next icon in the arrayOfUfoIcons after
+	 * every 10 levels.
+	 * 
+	 * @return BufferedImage
+	 */
 	public BufferedImage changeUfoIcon(){
 		if (gameModel.getUfoLevel() % 10 == 0){
 			if(!changedIcon){
