@@ -118,6 +118,7 @@ public class MainFrame extends JFrame implements Observer {
 		panels.setOpaque(false);
 		
 		setBottomPanel();
+		setResizable(false);
 		
 		pack();
 		setVisible(true);

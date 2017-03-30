@@ -46,7 +46,7 @@ public class GameIconCreator {
 		imageRock = ImageIO.read(new File("src/game/view/rock.png"));
 		imageSlingshot = ImageIO.read(new File("src/game/view/slingshot.png"));
 		imageBaseballBat = ImageIO.read(new File("src/game/view/baseballbat.png"));
-		imageGolfClub = ImageIO.read(new File("src/game/view/sniper.png"));
+		imageGolfClub = ImageIO.read(new File("src/game/view/golfClub.png"));
 		imageKatana = ImageIO.read(new File("src/game/view/katana.png"));
 		imageLightsaber = ImageIO.read(new File("src/game/view/bluelightsaber.png"));
 		imageCatapult = ImageIO.read(new File("src/game/view/catapult.png"));
