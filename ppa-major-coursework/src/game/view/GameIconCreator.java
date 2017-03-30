@@ -1,18 +1,21 @@
 package game.view;
-import java.awt.Image;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import game.model.GameModel;
 
+/**
+ * This class is used to read and provide game icons to the game view.
+ * 
+ * @author Dimitris Papatheodoulou
+ *
+ */
 public class GameIconCreator {
 
+	// Declaring fields that will hold images.
 	private BufferedImage imageFist;
 	private BufferedImage imageRock;
 	private BufferedImage imageSlingshot;
@@ -31,17 +34,25 @@ public class GameIconCreator {
 	private BufferedImage ufo6;
 	private BufferedImage ufo7;
 	private BufferedImage ufo8;
-
-	private int attack;
 	private BufferedImage image;
+	// Declaring array of Ufo Icons
+	private BufferedImage[] arrayOfUfoIcons;
+	// Declaring other fields.
+	private int attack;
 	private int price;
 	private GameModel gameModel;
-	private BufferedImage[] arrayOfUfoIcons;
 	private int ufoIndex;
 	private boolean changedIcon;
 	
+	/**
+	 * The constructor receives a parameter of type GameModel,
+	 * initialises all fields with images and adds the ufo images to an array.
+	 * @param gameModel
+	 * @throws IOException
+	 */
 	public GameIconCreator(GameModel gameModel) throws IOException {
 		
+		// Reads all the item's icons and initialises the fields accordingly to the path.
 		imageFist = ImageIO.read(new File("src/game/view/fist.png"));
 		imageRock = ImageIO.read(new File("src/game/view/rock.png"));
 		imageSlingshot = ImageIO.read(new File("src/game/view/slingshot.png"));
@@ -53,6 +64,7 @@ public class GameIconCreator {
 		imageTnt = ImageIO.read(new File("src/game/view/tnt.png"));
 		imageNuclearBomb = ImageIO.read(new File("src/game/view/nuclearbomb.png"));
 		
+		// Reads all the ufo's icons and initialises the fields accordingly to the path.
 		ufo1 = ImageIO.read(new File("src/game/view/Ufo1.png"));
 		ufo2 = ImageIO.read(new File("src/game/view/Ufo2.png"));
 		ufo3 = ImageIO.read(new File("src/game/view/Ufo3.png"));
@@ -63,7 +75,9 @@ public class GameIconCreator {
 		ufo8 = ImageIO.read(new File("src/game/view/Ufo8.png"));
 		
 		this.gameModel = gameModel;
+		// Creates a new array of BufferedImages with 8 positions.
 		arrayOfUfoIcons = new BufferedImage[8];
+		// Ini
 		arrayOfUfoIcons[0] = ufo1;
 		arrayOfUfoIcons[1] = ufo2;
 		arrayOfUfoIcons[2] = ufo3;
