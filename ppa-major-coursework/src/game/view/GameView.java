@@ -33,9 +33,15 @@ import game.model.ClickModel;
 import game.model.GameModel;
 
 
-
+/**
+ * The class creates all the components that are used for the game panel.
+ * 
+ * @author Dimitris Papatheodoulou
+ *
+ */
 public class GameView extends JPanel implements Observer{
 
+	// Declaring fields.
 	private GameIconCreator storeItems;
 	private ClickModel clickObsv;
 	private GameModel gameModel;
@@ -65,28 +71,32 @@ public class GameView extends JPanel implements Observer{
 	private JLabel jlUfoCharacter;
 	private JButton infoButton;
 	
+	/**
+	 * Creates objects of ClickModel, GameModel and GameIconCreator, 
+	 * calls the initWidget method which initialises the widgets and adds
+	 * to gameModel this class as observer.
+	 * 
+	 * @throws IOException
+	 */
 	public GameView() throws IOException {
-		
-		
-		this.setPreferredSize(new Dimension(600,600));
-		this.setSize(new Dimension(600,600));
-		
 		
 		clickObsv = new ClickModel();
 		gameModel = new GameModel();
 		storeItems = new GameIconCreator(gameModel);
 		initWidgets();
 		setButtonsVisibility();
+		// Adds to gameModel this class as observer
 		gameModel.addObserver(this);
 		this.setOpaque(false);
-		
-		
 	}
 	
 	
-	
+	/**
+	 * Initialisation of all the widgets.
+	 */
 	private void initWidgets() {
 		
+		// Creation of JPanels
 		JPanel jpDisplay = new JPanel(new BorderLayout());
 		JPanel jpEast = new JPanel(new BorderLayout());
 		JPanel jpEastStore = new JPanel(new GridLayout(12,1));
@@ -96,9 +106,10 @@ public class GameView extends JPanel implements Observer{
 		JPanel jpWestInfo = new JPanel(new GridLayout(12,1));
 		JPanel jpCenterCenterNorth = new JPanel();
 		JPanel jpCenterCenter = new JPanel(new BorderLayout());
-		JPanel jpSouth = new JPanel(new BorderLayout());
-		JPanel jpSouthEast = new JPanel(new BorderLayout());
+		JPanel jpNorth = new JPanel(new BorderLayout());
+		JPanel jpNorthWest = new JPanel(new BorderLayout());
 		
+		// Makes the panels transparent
 		jpEast.setOpaque(false);
 		jpEastStore.setOpaque(false);
 		jpCenter.setOpaque(false);
@@ -108,8 +119,7 @@ public class GameView extends JPanel implements Observer{
 		jpCenterCenterNorth.setOpaque(false);
 		jpCenterCenter.setOpaque(false);
 		
-		
-		
+		// Creation of JLabels that will present information about the game
 		jlUfo = new JLabel("UFO Level: " + gameModel.getUfoLevel(), SwingConstants.RIGHT);
 		jlUfo.setFont(new Font("Berlin Sans FB", Font.PLAIN, 25));
 		jlUfo.setForeground(Color.YELLOW);
@@ -123,60 +133,79 @@ public class GameView extends JPanel implements Observer{
 		jlTotalMoney.setFont(new Font("Berlin Sans FB", Font.PLAIN, 25));
 		jlTotalMoney.setForeground(Color.YELLOW);
 		
+		// Creation of buttons for items in store. 
 		jbStoreItem1 = new JButton("<html>Fist" + "<br>" 
 		        + "Price: " + gameModel.getFistPrice() + "</html>");
 		jbStoreItem1.setBorderPainted( false );
 		jbStoreItem1.addActionListener(new FistButtonListener(gameModel));
 		jbStoreItem1.setIcon(new ImageIcon(storeItems.getImageFist()));
 		jbStoreItem1.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem2 = new JButton("<html>Rock"+ "<br>" 
 		        + "Price: " + gameModel.getRockPrice() + "</html>");
 		jbStoreItem2.setBorderPainted( false );
 		jbStoreItem2.addActionListener(new RockButtonListener(gameModel));
 		jbStoreItem2.setIcon(new ImageIcon(storeItems.getImageRock()));
 		jbStoreItem2.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem3 = new JButton("<html>Slingshot" + "<br>" 
 		        + "Price: " + gameModel.getSlingshotPrice() + "</html>");
 		jbStoreItem3.setBorderPainted( false );
 		jbStoreItem3.addActionListener(new SlingshotButtonListener(gameModel));
 		jbStoreItem3.setIcon(new ImageIcon(storeItems.getImageSlingshot()));
 		jbStoreItem3.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem4 = new JButton("<html>Baseball bat"+ "<br>" 
 		        + "Price: " + gameModel.getBaseballBatPrice() + "</html>");
 		jbStoreItem4.setBorderPainted( false );
 		jbStoreItem4.addActionListener(new BaseballBatButtonListener(gameModel));
 		jbStoreItem4.setIcon(new ImageIcon(storeItems.getImageBaseballBat()));
 		jbStoreItem4.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem5 = new JButton("<html>Golf club"+ "<br>" 
 		        + "Price: " + gameModel.getGolfClubPrice() + "</html>");
 		jbStoreItem5.setBorderPainted( false );
 		jbStoreItem5.addActionListener(new GolfClubButtonListener(gameModel));
 		jbStoreItem5.setIcon(new ImageIcon(storeItems.getImageGolfClub()));
 		jbStoreItem5.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem6 = new JButton("<html>Katana"+ "<br>" 
 		        + "Price: " + gameModel.getKatanaPrice() + "</html>");
 		jbStoreItem6.setBorderPainted( false );
 		jbStoreItem6.addActionListener(new KatanaButtonListener(gameModel));
 		jbStoreItem6.setIcon(new ImageIcon(storeItems.getImageKatana()));
 		jbStoreItem6.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem7 = new JButton("<html>Lightsaber" + "<br>" 
 		        + "Price: " + gameModel.getLightsaberPrice() + "</html>");
 		jbStoreItem7.setBorderPainted( false );
 		jbStoreItem7.addActionListener(new LightsaberButtonListener(gameModel));
 		jbStoreItem7.setIcon(new ImageIcon(storeItems.getImageLightsaber()));
 		jbStoreItem7.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem8 = new JButton("<html>Catapult" + "<br>" 
 		        + "Price: " + gameModel.getCatapultPrice() + "</html>");
 		jbStoreItem8.setBorderPainted( false );
 		jbStoreItem8.addActionListener(new CatapultButtonListener(gameModel));
 		jbStoreItem8.setIcon(new ImageIcon(storeItems.getImageCatapult()));
 		jbStoreItem8.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem9 = new JButton("<html>T.N.T"+ "<br>" 
 		        + "Price: " + gameModel.getTntPrice() + "</html>");
 		jbStoreItem9.setIcon(new ImageIcon(storeItems.getImageTnt()));
 		jbStoreItem9.addActionListener(new TntButtonListener(gameModel));
 		jbStoreItem9.setBorderPainted( false );
 		jbStoreItem9.setOpaque(false);
+		
+		// Creation of buttons for items in store. 
 		jbStoreItem10 = new JButton("<html>Nuclear Bomb" + "<br>" 
 		        + "Price: " + gameModel.getMissilePrice() + "</html>");
 		jbStoreItem10.setIcon(new ImageIcon(storeItems.getImageNuclearBomb()));
@@ -185,75 +214,89 @@ public class GameView extends JPanel implements Observer{
 		jbStoreItem10.setOpaque(false);
 		
 		
+		// Creates a progressBar that will present the health of the ufo
 		progressBar = new JProgressBar(0, gameModel.getUfoMaxHealth());
+		// Initialises the value of the progress bar with the Ufo's max health.
 		progressBar.setValue(gameModel.getUfoMaxHealth());
 		progressBar.setStringPainted(true);
 		progressBar.setForeground(Color.RED);
-		progressBar.setString(gameModel.getUfoHealth() + " /" + gameModel.getUfoMaxHealth());
+		progressBar.setString("Health : " + gameModel.getUfoHealth() + " /" + gameModel.getUfoMaxHealth());
 		
 		
+		// Creation of labels for owned items.
 		jlInfoItem1 = new JLabel("<html>Fist's Level: " + gameModel.getFistLevel() + "<br>" 
 		        + "Fist's Damage: " + gameModel.getFistDamage() + "</html>");
 		
 		jlInfoItem1.setIcon(new ImageIcon(storeItems.getImageFist()));
 		jlInfoItem1.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem2 = new JLabel("<html>Rock's Level: " + gameModel.getRockLevel() + "<br>" 
 		        + "Rock's Damage: " + gameModel.getRockDamage() + "</html>");
 		jlInfoItem2.setIcon(new ImageIcon(storeItems.getImageRock()));
 		jlInfoItem2.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem3 = new JLabel("<html>Slingshot's Level: " + gameModel.getSlingshotLevel() + "<br>" 
 		        + "Slingshot's Damage: " + gameModel.getSlingshotDamage() + "</html>");
 		jlInfoItem3.setIcon(new ImageIcon(storeItems.getImageSlingshot()));
 		jlInfoItem3.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem4 = new JLabel("<html>Baseball Bat's Level: " + gameModel.getBaseballBatLevel() + "<br>" 
 		        + "Baseball Bat's Damage: " + gameModel.getBaseballBatDamage() + "</html>");
 		jlInfoItem4.setIcon(new ImageIcon(storeItems.getImageBaseballBat()));
 		jlInfoItem4.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem5 = new JLabel("<html>Golf Club's Level: " + gameModel.getGolfClubLevel() + "<br>" 
 		        + "GolfClub's Damage: " + gameModel.getGolfClubDamage() + "</html>");
 		jlInfoItem5.setIcon(new ImageIcon(storeItems.getImageGolfClub()));
 		jlInfoItem5.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem6 = new JLabel("<html>Katana's Level: " + gameModel.getKatanaLevel() + "<br>" 
 		        + "Katana's Damage: " + gameModel.getKatanaDamage() + "</html>");
 		jlInfoItem6.setIcon(new ImageIcon(storeItems.getImageKatana()));
 		jlInfoItem6.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem7 = new JLabel("<html>Lightsaber's Level: " + gameModel.getLightsaberLevel() + "<br>" 
 		        + "Lightsaber's Damage: " + gameModel.getLightsaberDamage() + "</html>");
 		jlInfoItem7.setIcon(new ImageIcon(storeItems.getImageLightsaber()));
 		jlInfoItem7.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem8 = new JLabel("<html>Catapult's Level: " + gameModel.getCatapultLevel() + "<br>" 
 		        + "Catapult's Damage: " + gameModel.getCatapultDamage() + "</html>");
 		jlInfoItem8.setIcon(new ImageIcon(storeItems.getImageCatapult()));
 		jlInfoItem8.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem9 = new JLabel("<html>T.N.T's Level: " + gameModel.getTntLevel() + "<br>" 
 		        + "T.N.T's Damage: " + gameModel.getTntDamage() + "</html>");
 		jlInfoItem9.setIcon(new ImageIcon(storeItems.getImageTnt()));
 		jlInfoItem9.setForeground(Color.WHITE);
 		
+		// Creation of labels for owned items.
 		jlInfoItem10 = new JLabel("<html>Nuclear Bomb's Level: " + gameModel.getMissileLevel() + "<br>" 
 		        + "Nuclear Bomb's Damage: " + gameModel.getMissileDamage() + "</html>");
 		jlInfoItem10.setIcon(new ImageIcon(storeItems.getImageNuclearBomb()));
 		jlInfoItem10.setForeground(Color.WHITE);
 		
-		
+		// Creation of Ufo's Label.
 		jlUfoCharacter = new JLabel();
+		// Sets the icon to the corresponding ufo image.
 		jlUfoCharacter.setIcon(new ImageIcon(storeItems.getImageUfo1()));
 		jlUfoCharacter.setHorizontalAlignment(JLabel.CENTER);
 		jlUfoCharacter.addMouseListener(new GameUfoListener(clickObsv, gameModel));
 		
-		
+		// Creates a Help button with instructions on how to play the game.
 		infoButton = new JButton("Help");
 		infoButton.addActionListener(new InfoButtonListener());
 		
 		
+		// Adds the item's buttons under the Store label
 		jpEastStore.add(new JLabel(""));
 		jpEastStore.add(jlStore);
 		jpEastStore.add(jbStoreItem1);
@@ -267,12 +310,14 @@ public class GameView extends JPanel implements Observer{
 		jpEastStore.add(jbStoreItem9);
 		jpEastStore.add(jbStoreItem10);
 		
-		jpSouthEast.add(infoButton, BorderLayout.WEST);
-		jpSouthEast.setOpaque(false);
-		jpSouth.add(jpSouthEast, BorderLayout.NORTH);
-		jpSouth.setOpaque(false);
+		// Adds the Help button at the top left hand side.
+		jpNorthWest.add(infoButton, BorderLayout.WEST);
+		jpNorthWest.setOpaque(false);
+		jpNorth.add(jpNorthWest, BorderLayout.NORTH);
+		jpNorth.setOpaque(false);
 		
-		jpWestInfo.add(jpSouth);
+		// Adds the item's labels under the Owned items label.
+		jpWestInfo.add(jpNorth);
 		jpWestInfo.add(jlInfo);
 		jpWestInfo.add(jlInfoItem1);
 		jpWestInfo.add(jlInfoItem2);
@@ -285,6 +330,7 @@ public class GameView extends JPanel implements Observer{
 		jpWestInfo.add(jlInfoItem9);
 		jpWestInfo.add(jlInfoItem10);
 		
+		// Sets the position of each panel.
 		jpEast.add(jpEastStore);
 		jpCenterNorth.add(jlTotalMoney, BorderLayout.WEST);
 		jpCenterNorth.add(jlUfo, BorderLayout.CENTER);
@@ -293,36 +339,42 @@ public class GameView extends JPanel implements Observer{
 		jpCenterCenter.add(jpCenterCenterNorth, BorderLayout.NORTH);
 		jpCenterCenter.add(jlUfoCharacter, BorderLayout.CENTER);
 		jpCenter.add(jpCenterCenter, BorderLayout.CENTER);
-		
-		
-		
 		jpWest.add(jpWestInfo);
 		
-		
+		// Adds the sub-panels to the main panel, in their position.
 		jpDisplay.add(jpEast, BorderLayout.EAST);
 		jpDisplay.add(jpCenter, BorderLayout.CENTER);
 		jpDisplay.add(jpWest, BorderLayout.WEST);
 		
-		add(jpDisplay);
-		jpDisplay.setOpaque(false);
-		jpDisplay.setPreferredSize(new Dimension(1000,750));
 		
+		jpDisplay.setOpaque(false);
+		// Sets the dimensions of the panel.
+		jpDisplay.setPreferredSize(new Dimension(1000,750));
+		// Adds the jpDisplay to GameView.
+		add(jpDisplay);
 		setVisible(true);
 		
 	}
 
 
-
+	/*
+	 * Updates the value of each component accordingly to the actions of the user.
+	 * 
+	 * (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		
 		jlUfoCharacter.setIcon(new ImageIcon(storeItems.changeUfoIcon()));
 		
 		setButtonsVisibility();
+		// Updates the progress bar to the ufo's max health
 		progressBar.setMaximum(gameModel.getUfoMaxHealth());
 		progressBar.setValue(gameModel.getUfoHealth());
-		progressBar.setString(gameModel.getUfoHealth() + " /" + gameModel.getUfoMaxHealth());
+		progressBar.setString("Health: " + gameModel.getUfoHealth() + " /" + gameModel.getUfoMaxHealth());
 		
+		// Updates all labels with the new values.
 		jlInfoItem1.setText("<html>Fist's Level: " + gameModel.getFistLevel() + "<br>" 
 		        + "Fist's Damage: " + gameModel.getFistDamage() + "</html>");
 		
@@ -353,12 +405,14 @@ public class GameView extends JPanel implements Observer{
 		jlInfoItem10.setText("<html>Nuclear Bomb's Level: " + gameModel.getMissileLevel() + "<br>" 
 		        + "Nuclear Bomb's Damage: " + gameModel.getMissileDamage() + "</html>");
 		
+		// Updates the level of the game
 		jlUfo.setText("UFO Level: " + gameModel.getUfoLevel());
 		
+		// Updates the amount of coins.
 		jlTotalMoney.setText("Total Coins: " + gameModel.getTotalMoney());
 		
 		
-		
+		// Updates all buttons with the nuew values.
 		jbStoreItem1.setText("<html>Fist" + "<br>" 
 		        + "Price: " + gameModel.getFistPrice() + "</html>");
 		
@@ -390,7 +444,10 @@ public class GameView extends JPanel implements Observer{
 		        + "Price: " + gameModel.getMissilePrice() + "</html>");
 	}
 	
-	
+	/**
+	 * Sets the visibility of item's buttons depending on whether the user has enough coins to
+	 * buy a specific item. 
+	 */
 	public void setButtonsVisibility() {
 		
 		if (gameModel.getTotalMoney() >= gameModel.getFistPrice()) {
