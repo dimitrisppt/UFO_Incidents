@@ -5,27 +5,20 @@
 	<classpathentry kind="lib" path="src/ripley.jar"/>
 	<classpathentry kind="lib" path="src/ripley-docs.jar"/>
 	<classpathentry kind="lib" path="src/libraries/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-api-client-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-api-client-android-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-android-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-api-client-appengine-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-appengine-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-api-client-gson-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-gson-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-jackson2-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-java6-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-api-client-servlet-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-client-servlet-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-services-youtube-v3-rev182-1.22.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-services-youtube-v3-rev182-1.22.0-sources.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-api-services-youtube-v3-rev182-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-android-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-http-client-appengine-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-appengine-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-gson-1.22.0.jar"/>
-	<classpathentry kind="lib" path="src/libraries/google-http-client-jackson2-1.22.0 (copy).jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-jackson2-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-http-client-jdo-1.22.0.jar"/>
 	<classpathentry kind="lib" path="src/libraries/google-oauth-client-1.22.0.jar"/>
