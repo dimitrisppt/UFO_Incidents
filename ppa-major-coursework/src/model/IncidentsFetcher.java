@@ -10,7 +10,7 @@ import api.ripley.Ripley;
 
 /**
  * 
- * This class deals with valid dates ad is the main way of interacting with ripley
+ * This is the main way of interacting with ripley and class deals with valid dates
  * @author Aakash Doshi
  *
  */

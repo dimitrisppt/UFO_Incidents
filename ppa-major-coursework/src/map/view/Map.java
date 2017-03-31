@@ -24,7 +24,12 @@ import map.model.StateGroup;
 import model.IncidentsFetcher;
 
 
-
+/**
+ * Initialises the map.
+ * The main model class for the map
+ * @author Jayen
+ *
+ */
 public class Map extends JPanel implements Observer {
 	
 	private IncidentsFetcher fetcher;

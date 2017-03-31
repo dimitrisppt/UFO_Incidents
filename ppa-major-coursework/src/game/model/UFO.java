@@ -37,7 +37,7 @@ public class UFO extends Observable{
 	private void updateStats(){
 		maxHealth = (int) Math.floor(baseHealth * Math.pow(level, multiplier));
 		remainingHealth = maxHealth;
-		int divider = (int) Math.pow(2, (1+(level/10)));
+		int divider = (int) Math.pow(1.5, (1+(level/10)));
 		reward = (int) Math.floor((baseHealth * level)/(50+divider));
 		if (reward == 0){
 			reward++;

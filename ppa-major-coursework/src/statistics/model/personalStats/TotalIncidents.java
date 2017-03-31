@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import api.ripley.Incident;
 import model.IncidentsFetcher;
 
+/**
+ * Personal Statistic that returns the total incidents in the date range in string form.
+ * @author Henry Valeyre
+ *
+ */
 public class TotalIncidents {
 	private IncidentsFetcher fetcher;
 	private ArrayList<Incident> incidentList;
