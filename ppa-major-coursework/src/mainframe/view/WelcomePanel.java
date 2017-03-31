@@ -20,8 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-//Here we implemented an Observer as this is the view and it will be updated depending of what happens in the model
-//the model for this class is the IncidentFetcher.
+/**
+ * Here we implemented an Observer as this is the view and it will be updated depending of what happens in the model
+ * the model for this class is the IncidentFetcher.
+ * @author Henry
+ *
+ */
 public class WelcomePanel extends JPanel implements Observer{
 	
 	
